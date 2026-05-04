@@ -59,9 +59,9 @@ function formatCurrency(num) {
 
 function resetFormErrors() {
   // Restaurar Placeholders originales
-  inId.placeholder = "Cédula (10) / RUC (13)";
-  inNm.placeholder = "Nombre";
-  inLn.placeholder = "Apellido";
+  inId.placeholder = "*Cédula(10)/RUC(13)";
+  inNm.placeholder = "*Nombre";
+  inLn.placeholder = "*Apellido";
 
   // Quitar clases de error
   [inId, inNm, inLn].forEach((input) => {
@@ -335,7 +335,7 @@ function sendWhatsApp() {
   // 1. Validación de Identificación
   if (idVal.length !== 10 && idVal.length !== 13) {
     inId.value = ""; // Limpiamos para que se vea el placeholder
-    inId.placeholder = "ID debe tener 10 o 13 dígitos";
+    inId.placeholder = "*Cédula(10)/RUC(13)";
     inId.classList.add("error-field");
     hayErrores = true;
     if (!primerCampoConError) primerCampoConError = inId;
@@ -344,7 +344,7 @@ function sendWhatsApp() {
   // 2. Validación de Nombre
   if (nameVal.length < 2) {
     inNm.value = "";
-    inNm.placeholder = "Mínimo 2 letras";
+    inNm.placeholder = "*Nombre";
     inNm.classList.add("error-field");
     hayErrores = true;
     if (!primerCampoConError) primerCampoConError = inNm;
@@ -353,7 +353,7 @@ function sendWhatsApp() {
   // 3. Validación de Apellido
   if (lastVal.length < 2) {
     inLn.value = "";
-    inLn.placeholder = "Mínimo 2 letras";
+    inLn.placeholder = "+Apellido";
     inLn.classList.add("error-field");
     hayErrores = true;
     if (!primerCampoConError) primerCampoConError = inLn;

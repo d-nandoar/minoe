@@ -108,7 +108,7 @@
 
 .nosotros__about-h2,
 .catalog__title,
-.contact-form__title {
+.contact__title {
   /* 1. Tipografía - Asegúrate de tenerla importada de Google Fonts */
   font-family: "Playfair Display", serif;
   /* font-size: 3.2em; Un poco más grande para lucir los remates */
@@ -135,8 +135,8 @@
 .nosotros__about-h2::after,
 .catalog__title::before,
 .catalog__title::after,
-.contact-form__title::before,
-.contact-form__title::after {
+.contact__title::before,
+.contact__title::after {
   content: "";
   height: 2px;
   flex-grow: 1;
@@ -870,7 +870,7 @@
 .btn-pay {
   flex: 5;
   height: 2.5rem;
-  background: var(--color-wapp);
+  background: var(--color-dorado);
   color: var(--color-blanco);
   border: none;
   border-radius: 0.9375rem;
@@ -883,17 +883,20 @@
   /* font-size: 1.1em; */
   box-shadow: var(--sombra-nav);
   text-transform: none;
-  transition: background-color var(--transition-main);
+  transition:
+    background-color var(--transition-main),
+    box-shadow var(--transition-main);
 }
 
 @media (hover: hover) {
   .btn-pay:hover {
-    background-color: var(--color-wapp-hover);
+    background-color: var(--color-wapp);
+    box-shadow: var(--sombra-verde-hover);
   }
 }
 
 .btn-clear-inline {
-  flex: 1;
+  flex: 1.5;
   height: 2.5rem;
   border-radius: 0.9375rem;
   background: var(--color-dorado);
@@ -903,13 +906,13 @@
   align-items: center;
   justify-content: center;
   transition:
-    border-color var(--transition-main),
-    background-color var(--transition-main);
+    background-color var(--transition-main),
+    box-shadow var(--transition-main);
 }
 @media (hover: hover) {
   .btn-clear-inline:hover {
-    border-color: var(--color-rojo);
     background-color: var(--color-crema);
+    box-shadow: var(--sombra-verde-hover);
   }
 }
 @media (hover: hover) {
@@ -1712,7 +1715,7 @@
   overflow: hidden;
 
   background-color: var(--color-blanco);
-  padding: 0 0 20px 0;
+  /* padding: 0 0 20px 0; */
   border-radius: 25px;
   /* border: 1px solid var(--borde-dorado-tenue); */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -1774,15 +1777,22 @@
 }
 
 .contact__title {
-  font-size: 2em;
-  color: var(--color-verde-minoe);
-  margin-bottom: 1.5rem;
+  /* font-size: 2em; */
+  /* padding-bottom: 0; */
+  gap: 0.9rem;
+  /* color: var(--color-verde-minoe);
   text-transform: uppercase;
   letter-spacing: 4px;
-  text-align: center;
+  text-align: center; */
+}
+
+.contact__title::before,
+.contact__title::after {
+  background-color: var(--color-gris-oscuro);
 }
 
 .contact__form {
+  margin-top: 2.5rem;
   font-size: 0.8em;
 }
 
@@ -1804,7 +1814,7 @@
   font-family: var(--fuente-cuerpo);
   font-size: 0.9em;
   padding: 0.8rem 1.1rem;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   border: 1px solid var(--borde-input);
   border-radius: 0.9375rem;
   outline: none;
@@ -1835,27 +1845,32 @@
 
 /* Botón WhatsApp Color Oficial */
 .contact__button {
+  /* flex: 1; */
+  height: 2.5rem;
+  background: var(--color-dorado);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  width: 100%;
-  padding: 1.1rem;
-  margin-top: 1rem;
-  background-color: #25d366;
-  color: #fff;
-  border: none;
-  border-radius: 0.9375rem;
-  text-transform: uppercase;
+  margin-top: 24px;
+  margin-bottom: 2rem;
+  gap: 0.1875rem;
   font-size: 1.2em;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: var(--sombra-nav);
+  text-transform: none;
+  transition:
+    background-color var(--transition-main),
+    box-shadow var(--transition-main);
 }
 
 .contact__button:hover {
-  background-color: #128c7e;
-  transform: translateY(-3px);
+  background-color: var(--color-wapp);
+  box-shadow: var(--sombra-verde-hover);
 }
 
 /* .contact__btn-icon {
@@ -2148,6 +2163,11 @@
 
   .nosotros__about-p {
     line-height: 1.4; /* Un interlineado amplio respira lujo */
+  }
+
+  .contact__title {
+    font-size: 2.2em; /* Reducimos el tamaño para que no empuje las líneas */
+    gap: 1rem; /* Reducimos el espacio entre el texto y la línea */
   }
 }
 
@@ -2502,6 +2522,18 @@
   .contact-form__title::after {
     max-width: 25px;
   } */
+
+  .contact__title {
+    gap: 0.6rem;
+  }
+  .contact__title::before,
+  .contact__title::after {
+    max-width: 20px;
+  }
+  .contact__title::before,
+  .contact__title::after {
+    max-width: 20px;
+  }
 
   .contact__char-count {
     /* font-size: 0.7em; */
