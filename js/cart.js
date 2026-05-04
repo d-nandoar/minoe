@@ -283,9 +283,13 @@ function updateUI() {
     if (count > 99) {
       cartCount.innerText = "99+";
       cartCount.style.fontSize = "0.75em";
+      cartCount.style.top = "-0.625rem";
+      cartCount.style.right = "-0.4063rem";
     } else {
       cartCount.innerText = count;
       cartCount.style.fontSize = "0.9em";
+      cartCount.style.top = "-0.3rem";
+      cartCount.style.right = ".0313rem";
     }
   } else {
     cartCount.style.display = "none"; // Por si acaso llega a 0 aquí
@@ -324,44 +328,40 @@ function sendWhatsApp() {
   // if (e) e.preventDefault();
 
   resetFormErrors();
+  // 1. Limpiamos estados previos
+  resetFormErrors();
 
   const idVal = inId.value.trim();
   const nameVal = inNm.value.trim();
   const lastVal = inLn.value.trim();
 
-  let hayErrores = false;
-  let primerCampoConError = null;
+  // VALIDACIÓN SECUENCIAL (Uno por uno)
 
-  // 1. Validación de Identificación
+  // 1. Identificación
   if (idVal.length !== 10 && idVal.length !== 13) {
-    inId.value = ""; // Limpiamos para que se vea el placeholder
+    inId.value = "";
     inId.placeholder = "*Cédula(10)/RUC(13)";
-    inId.classList.add("error-field");
-    hayErrores = true;
-    if (!primerCampoConError) primerCampoConError = inId;
+    inId.classList.add("error-field"); // Activa el luxury-shake
+    inId.focus();
+    return; // Sale de la función y no evalúa lo demás
   }
 
-  // 2. Validación de Nombre
+  // 2. Nombre
   if (nameVal.length < 2) {
     inNm.value = "";
     inNm.placeholder = "*Nombre";
     inNm.classList.add("error-field");
-    hayErrores = true;
-    if (!primerCampoConError) primerCampoConError = inNm;
+    inNm.focus();
+    return; // Detiene el proceso aquí
   }
 
-  // 3. Validación de Apellido
+  // 3. Apellido
   if (lastVal.length < 2) {
     inLn.value = "";
-    inLn.placeholder = "+Apellido";
+    inLn.placeholder = "*Apellido";
     inLn.classList.add("error-field");
-    hayErrores = true;
-    if (!primerCampoConError) primerCampoConError = inLn;
-  }
-
-  if (hayErrores) {
-    if (primerCampoConError) primerCampoConError.focus();
-    return; // Detenemos el envío
+    inLn.focus();
+    return; // Detiene el proceso aquí
   }
 
   // Definición de Emojis para que el mensaje de WhatsApp se vea elegante.

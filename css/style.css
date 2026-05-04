@@ -423,10 +423,15 @@
 }
 
 .navbar__cart-count {
-  display: none;
+  /* display: none; */
   position: absolute;
-  top: -0.75rem;
-  right: -0.0625rem;
+  top: -0.3rem;
+  right: 0.0313rem;
+  /* top: -0.75rem; */
+  /* right: -0.0625rem; */
+  z-index: calc(
+    var(--z-base) + 1
+  ); /* Aseguramos que esté sobre las chispas (sparkles) */
   color: var(--color-gris-oscuro);
   width: 1.5rem;
   height: 1.5rem;
@@ -436,6 +441,7 @@
   text-align: center;
   align-items: center;
   font-family: var(--fuente-cuerpo);
+  pointer-events: none; /* Evita que el número interfiera con los clics en el icono */
   transition: background-color var(--transition-main);
 }
 
@@ -534,9 +540,9 @@
 }
 
 /* 6. Número del carrito (aseguramos que no tape el centro) */
-.navbar__cart-count {
+/* .navbar__cart-count {
   pointer-events: none;
-}
+} */
 
 /* =========================================
    6. CART
@@ -794,20 +800,24 @@
   gap: 8px;
 }
 
-/* inputs validaciones */
-
-/* input con error */
+/* --- ESTADOS DE ERROR EN INPUTS --- */
 
 .error-field {
+  /* 1. Estética del error */
   border: 1px solid var(--color-error-field) !important;
   background-color: var(--color-bg-error-field) !important;
+
+  /* 2. Animación (Shake) */
+  animation: shake var(--shake-duration) ease-in-out 0s 2;
+  will-change: transform; /* Optimización para animaciones fluidas */
+
+  /* 3. Transiciones */
   transition:
     border-color var(--transition-main),
     background-color var(--transition-main);
 }
 
-/* inputs sin rugosidad (también en el error) */
-
+/* Evitar sombras o estilos extraños cuando el usuario hace clic en el campo con error */
 .error-field:focus {
   border-color: var(--color-error-field) !important;
   box-shadow: none !important;
@@ -831,13 +841,13 @@
   }
 }
 
-.error-field {
-  /* Usamos las variables para tiempo y nombre de animación */
+/* .error-field {
+  Usamos las variables para tiempo y nombre de animación
   animation: shake var(--shake-duration) ease-in-out 0s 2;
   border: 1px solid var(--color-error-field) !important;
-  /* Optimizamos el rendimiento para que la sacudida sea fluida */
+  Optimizamos el rendimiento para que la sacudida sea fluida
   will-change: transform;
-}
+} */
 
 /* subtotal */
 
@@ -1868,9 +1878,11 @@
     box-shadow var(--transition-main);
 }
 
-.contact__button:hover {
-  background-color: var(--color-wapp);
-  box-shadow: var(--sombra-verde-hover);
+@media (hover: hover) {
+  .contact__button:hover {
+    background-color: var(--color-wapp);
+    box-shadow: var(--sombra-verde-hover);
+  }
 }
 
 /* .contact__btn-icon {

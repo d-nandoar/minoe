@@ -1,3 +1,6 @@
+// Constante con el número de teléfono para el mensaje de WhatsApp.
+const WHATSAPP_NUMERO = "593994831087";
+
 const contactForm = document.getElementById("whatsappForm");
 const contactErrorMsg = document.getElementById("contact-error-msg");
 const charCount = document.getElementById("char-count");
@@ -112,18 +115,20 @@ contactForm.addEventListener("submit", function (e) {
   // Construcción del mensaje
   const textoMensaje =
     `${iconSpark} *MINOE - NUEVA CONSULTA*\n` +
-    `--------------------------------\n` +
+    `-------------------------------\n` +
     `${iconUser} *Cliente:* ${inNombre.value.toUpperCase()}${apellidos}\n` +
     `${iconMap} *Ciudad:* ${ciudad}\n` +
     `${iconMail} *Email:* ${inEmail.value}\n` +
-    `--------------------------------\n` +
-    `${iconMsg} *Mensaje:*\n${inMotivo.value}\n` +
-    `--------------------------------\n` +
-    `_Enviado desde el sitio web oficial_`;
+    `-------------------------------\n` +
+    `${iconMsg} *Mensaje:*\n\n${inMotivo.value}\n\n` +
+    `-------------------------------\n` +
+    `_Enviado desde el sitio web Minoe oficial_`;
 
-  // El secreto está en aplicar el encodeURIComponent a TODO el bloque al final
+  // 'encodeURIComponent' transforma el mensaje en un formato que el navegador entiende como dirección web.
+  const finalMsgContact = encodeURIComponent(textoMensaje);
+  // Abre una nueva pestaña con el chat de WhatsApp listo para enviar el mensaje.
   window.open(
-    `https://wa.me/593994831087?text=${encodeURIComponent(textoMensaje)}`,
+    `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMERO}&text=${finalMsgContact}`,
     "_blank",
   );
 
