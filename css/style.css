@@ -1,6 +1,8 @@
 /* =========================================
-   4. GENERALES
+   1. GENERALES
    ========================================= */
+
+/* #region */
 
 /* íconos svg */
 
@@ -166,9 +168,12 @@
   color: var(--color-gris-oscuro);
 }
 
+/* #endregion */
+
 /* =========================================
-   5. HEADER (HAMB, LOGO, NAV Y CART)
+   2. HEADER (HAMB, LOGO, NAV Y CART)
    ========================================= */
+/* #region */
 
 .header {
   position: sticky;
@@ -179,7 +184,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-height: 4.5rem;
+  min-height: 3.75rem;
   background-color: var(--color-crema);
   box-shadow: var(--sombra-nav);
 }
@@ -553,9 +558,13 @@
   pointer-events: none;
 } */
 
+/* #endregion */
+
 /* =========================================
-   6. CART
+   3. CART
    ========================================= */
+
+/* #region */
 
 .sidebar {
   position: fixed;
@@ -981,14 +990,18 @@
   }
 }
 
+/* #endregion */
+
 /* =========================================
-   7. HERO
+   4. HERO
    ========================================= */
+
+/* #region */
 
 .hero__slider {
   /* height: 100vh; */
   height: 100svh;
-  margin-top: -4.5rem;
+  margin-top: -3.75rem;
   position: relative;
 }
 
@@ -1262,9 +1275,12 @@
   opacity: 0.9;
 }
 
+/* #endregion */
 /* =========================================
-   8. NOSOTROS
+   5. NOSOTROS
    ========================================= */
+
+/* #region */
 
 .nosotros {
   /* height: 100vh; */
@@ -1272,7 +1288,7 @@
   color: var(--color-gris-oscuro);
   padding: 5rem 0;
   letter-spacing: 1px;
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 3.75rem;
 }
 
 .nosotros__content {
@@ -1571,12 +1587,17 @@
   font-weight: 300;
   opacity: 0.9;
 }
+
+/* #endregion */
+
 /* =========================================
-   9. CATALOGO
+   6. CATALOGO
    ========================================= */
 
+/* #region */
+
 .catalog__container {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 3.75rem;
   background-color: var(--color-blanco);
   color: var(--color-gris-oscuro);
   padding: 5rem 0;
@@ -1701,16 +1722,20 @@
   }
 }
 
+/* #endregion */
+
 /* =========================================
-   9. Contacto
+   7. Contacto
    ========================================= */
 
 /* =========================================================
    SECCIÓN CONTACTO - ESTILO CLON "NOSOTROS"
    ========================================================= */
 
+/* #region */
+
 .contact {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 3.75rem;
 
   padding: 80px 0;
   /* background-color: var(--color-dorado); */
@@ -1940,7 +1965,13 @@
   /* visibility: hidden; se controla por JS */
 }
 
-/*------ secciones ------*/
+/* #endregion */
+
+/* =========================================
+   8. Footer
+   ========================================= */
+
+/* #region */
 
 .footer {
   color: var(--color-blanco);
@@ -2108,20 +2139,25 @@
   text-align: center;
 }
 
+/* #endregion */
+
 /* =========================================
-   ?. RESPONSIVE
+   9. RESPONSIVE
    ========================================= */
 
 /* ==========================================================
-   1. ESCRITORIO (Base): +1200px
+   9.1. ESCRITORIO (Base): +1200px
    Aquí va todo tu diseño principal, columnas, fuentes grandes, etc.
    ========================================================== */
 
 /* Desktop-First */
 
 /* ==========================================================
-   2. LAPTOPS / PANTALLAS MEDIANAS: 1200px hacia abajo
+   9.2. LAPTOPS / PANTALLAS MEDIANAS: 1200px hacia abajo
    ========================================================== */
+
+/* #region */
+
 @media (max-width: 1200px) {
   .hero__comtent-list {
     top: 20%;
@@ -2162,10 +2198,14 @@
     max-width: 20px;
   } */
 }
+/* #endregion */
 
 /* ==========================================================
-   3. TABLETS HORIZONTAL: 1024px hacia abajo
+   9.3. TABLETS HORIZONTAL: 1024px hacia abajo
    ========================================================== */
+
+/* #region */
+
 @media (max-width: 1024px) {
   .hero__arrows {
     left: calc(68% - 2.0844rem);
@@ -2214,10 +2254,14 @@
     gap: 1rem; /* Reducimos el espacio entre el texto y la línea */
   }
 }
+/* #endregion */
 
 /* ==========================================================
-   4. TABLETS VERTICAL: 768px hacia abajo (Punto crítico)
+   9.4. TABLETS VERTICAL: 768px hacia abajo (Punto crítico)
    ========================================================== */
+
+/* #region */
+
 @media (max-width: 768px) {
   /* menú responsive */
 
@@ -2422,9 +2466,13 @@
   }
 }
 
+/* #endregion */
+
 /* ==========================================================
-   5. MÓVILES: 480px hacia abajo
+   9.5. MÓVILES: 480px hacia abajo
    ========================================================== */
+
+/* #region */
 @media (max-width: 480px) {
   .hero__comtent-list {
     top: 15%;
@@ -2586,9 +2634,14 @@
   }
 }
 
+/* #endregion */
+
 /* ==========================================================
-   6. MÓVILES PEQUEÑOS: 350px hacia abajo
+   9.6. MÓVILES PEQUEÑOS: 350px hacia abajo
    ========================================================== */
+
+/* #region */
+
 @media (max-width: 350px) {
   .cart-item__info {
     width: 60%;
@@ -2609,9 +2662,10 @@
     /* height: 100dvh; */
   }
 }
+/* #endregion */
 
 /* ==========================================================
-   7. MÓVILES PEQUEÑOS: 320px hacia abajo
+   9.7. MÓVILES PEQUEÑOS: 320px hacia abajo
    ========================================================== */
 
 @media (max-width: 320px) {

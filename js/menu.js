@@ -208,7 +208,7 @@ function navegarA(idDestino, elementoLink) {
     activarLink(elementoLink);
 
     // Usamos offsetTop menos la altura del header (aprox 72px o 4.5rem)
-    const offsetHeader = 72;
+    const offsetHeader = 60;
     const posicionFinal =
       idDestino === "#hero" ? 0 : seccion.offsetTop - offsetHeader;
 
