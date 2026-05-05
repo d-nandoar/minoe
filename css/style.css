@@ -193,7 +193,11 @@
 }
 
 .header__contenedor {
-  width: 80%;
+  /* width: 80%; */
+  /* max-width: 1524px; */
+
+  width: 90%;
+  max-width: 1714.5px;
   margin: 0 auto;
 }
 
@@ -442,12 +446,17 @@
   align-items: center;
   font-family: var(--fuente-cuerpo);
   pointer-events: none; /* Evita que el número interfiera con los clics en el icono */
-  transition: background-color var(--transition-main);
+  transition:
+    background-color var(--transition-main),
+    color var(--transition-main);
 }
 
 @media (hover: hover) {
   .header__btn-cart:hover .header__cart-icon {
     background-color: var(--color-dorado);
+  }
+  .header__btn-cart:hover .navbar__cart-count {
+    color: var(--color-dorado);
   }
 }
 
@@ -1267,8 +1276,10 @@
 }
 
 .nosotros__content {
-  width: 80%;
-  max-width: 1524px;
+  /* width: 80%; */
+  /* max-width: 152s4px; */
+  width: 90%;
+  max-width: 1714.5px;
   /* height: 100px; */
   margin: 0 auto;
 }
@@ -1292,7 +1303,8 @@
   grid-template-rows: auto 1fr;
   gap: 60px; /* Reducimos un poco el gap para compactar */
   width: 100%;
-  max-width: 1524px;
+  /* max-width: 1524px; */
+  max-width: 1714.5px;
   margin: 0 auto;
 }
 
@@ -1408,6 +1420,8 @@
 /* --- Contenedor Maestro --- */
 .nosotros-cards {
   width: 100%;
+  /* max-width: 1524px; */
+  max-width: 1714.5px;
   margin-top: 60px;
 }
 
@@ -1570,8 +1584,11 @@
 }
 
 .catalogo__content {
-  width: 80%;
-  max-width: 1524px;
+  /* width: 80%; */
+  /* max-width: 1524px; */
+  width: 90%;
+  max-width: 1714.5px;
+
   margin: 0 auto;
 }
 
@@ -1718,8 +1735,10 @@
   grid-template-columns: 1fr; /* Imagen 60% - Formulario 40% */
   grid-template-rows: auto 1fr; /* Imagen 60% - Formulario 40% */
   align-items: center;
-  width: 80%;
-  max-width: 1524px;
+  /* width: 80%; */
+  /* max-width: 1524px; */
+  width: 90%;
+  max-width: 1714.5px;
   margin: 0 auto;
   gap: 2rem;
   overflow: hidden;
@@ -1829,9 +1848,17 @@
   border-radius: 0.9375rem;
   outline: none;
 }
+
 .contact__textarea {
-  min-height: 150px;
-  resize: none;
+  width: 100%;
+  min-height: 150px; /* Tu altura base */
+  resize: none; /* Bloqueas que el usuario lo estire, correcto por diseño */
+
+  /* PROPIEDADES CLAVE PARA EL SALTO DE LÍNEA */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.5; /* Mejora la legibilidad mientras escriben */
 }
 
 /* --- SOLUCIÓN DEFINITIVA FONDO BLANCO AUTOFILL --- */
@@ -1925,6 +1952,9 @@
   /* scroll-margin-top: 4.5rem; */
 }
 .footer__content {
+  width: 90%;
+  max-width: 1714.5px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2107,6 +2137,7 @@
     left: calc(70% - 25%);
     width: 50%;
     min-height: 250px;
+    /* aspect-ratio: 2.4 / 1; */
   }
 
   /* imagen (miniatura)*/
@@ -2144,6 +2175,7 @@
     left: calc(68% - 30%);
     width: 60%;
     min-height: 240px;
+    /* aspect-ratio: 2.56 / 1; */
   }
 
   .hero__img--thumbnail {

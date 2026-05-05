@@ -287,7 +287,7 @@ function updateUI() {
       cartCount.style.right = "-0.4063rem";
     } else {
       cartCount.innerText = count;
-      cartCount.style.fontSize = "0.9em";
+      cartCount.style.fontSize = "0.85em";
       cartCount.style.top = "-0.3rem";
       cartCount.style.right = ".0313rem";
     }
