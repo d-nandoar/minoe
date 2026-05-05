@@ -1980,9 +1980,11 @@
   mask-size: contain;
 } */
 
-.contact__button:hover {
-  background-color: var(--color-wapp);
-  box-shadow: var(--sombra-verde-hover);
+@media (hover: hover) {
+  .contact__button:hover {
+    background-color: var(--color-wapp);
+    box-shadow: var(--sombra-verde-hover);
+  }
 }
 
 /* --- AJUSTES RESPONSIVE --- */
