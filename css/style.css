@@ -1836,6 +1836,21 @@
   line-height: 1.6;
 }
 
+.contact__info-email {
+  text-transform: none;
+  font-weight: normal;
+  transition:
+    color var(--transition-main),
+    font-weight var(--transition-main);
+}
+
+@media (hover: hover) {
+  .contact__info-email:hover .contact__info-text {
+    color: var(--color-verde);
+    font-weight: 500;
+  }
+}
+
 /* --- LADO DERECHO: FORMULARIO ORIGINAL --- */
 .contact__form-side {
   padding: 3rem 0;
@@ -1908,6 +1923,15 @@
   overflow-wrap: break-word;
   word-break: break-word;
   line-height: 1.5;
+}
+
+.contact__input:focus,
+.contact__textarea:focus {
+  border-color: var(--borde-input-focus) !important;
+  background-color: var(--color-blanco) !important;
+  /* Aseguramos que no aparezca sombra al escribir */
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 /* --- SOLUCIÓN DEFINITIVA AUTOFILL --- */
