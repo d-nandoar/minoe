@@ -658,19 +658,46 @@
       <!-- =====================
          5. CONTACTO
          ======================= -->
-      <section id="contacto" class="contact">
+
+      <section class="contact" id="contacto">
         <div class="contact__container">
-          <div class="contact__image-container">
-            <img
-              src="assets/img/setreg.png"
-              alt="Contacto Minoe"
-              class="contact__image"
-            />
+          <!-- LADO IZQUIERDO: Información Visual -->
+          <div class="contact__info-side">
+            <div class="contact__image-container">
+              <img
+                src="assets/img/setreg.png"
+                alt="Contacto Minoe"
+                class="contact__image"
+              />
+            </div>
+
+            <div class="contact__details">
+              <p class="contact__subtitle">
+                Asesoría personalizada en todas nuestras líneas:
+                <span class="contact__category">Joyería</span>,
+                <span class="contact__category">Studio</span>,
+                <span class="contact__category">Gourmet</span>
+                y el equilibrio exclusivo de nuestros
+                <span class="contact__category">Sets de regalo</span>.
+              </p>
+              <div class="contact__info-block">
+                <h3 class="contact__info-label">Horario de Atención</h3>
+                <p class="contact__info-text">Lunes a Viernes: 09:00 - 18:00</p>
+                <p class="contact__info-text">Sábados: 10:00 - 14:00</p>
+              </div>
+              <div class="contact__info-block">
+                <h3 class="contact__info-label">Correo Electrónico</h3>
+                <p class="contact__info-text">contacto@minoe.studio</p>
+              </div>
+            </div>
           </div>
 
-          <div class="contact__form-container">
+          <!-- LADO DERECHO: Formulario Original -->
+          <div class="contact__form-side">
             <div class="contact__form-box">
-              <h2 class="contact__title">Contacto</h2>
+              <!-- Título con clase para adornos -->
+              <h2 class="contact__title section__title">Contacto</h2>
+
               <form id="whatsappForm" class="contact__form" novalidate>
                 <div class="contact__row">
                   <div class="contact__group">
@@ -678,7 +705,7 @@
                       type="text"
                       id="nombre"
                       class="contact__input"
-                      placeholder="* Nombre"
+                      placeholder="*Nombre"
                     />
                   </div>
                   <div class="contact__group">
@@ -692,7 +719,6 @@
                 </div>
 
                 <div class="contact__group">
-                  <!-- Cambiado de tel a text y id de telefono a ciudad -->
                   <input
                     type="text"
                     id="ciudad"
@@ -700,38 +726,39 @@
                     placeholder="Ciudad"
                   />
                 </div>
+
                 <div class="contact__group">
                   <input
                     type="email"
                     id="email"
                     class="contact__input"
-                    placeholder="* Correo Electrónico"
+                    placeholder="*Correo Electrónico"
                   />
                 </div>
+
                 <div class="contact__group">
                   <textarea
                     id="motivo"
                     class="contact__textarea"
-                    placeholder="* Escribe tu mensaje aquí..."
+                    placeholder="*Escribe tu mensaje aquí..."
                     maxlength="1000"
                   ></textarea>
-                  <div class="contact__footer-info">
-                    <p
-                      id="contact-error-msg"
-                      class="form-error-msg"
-                      style="margin: 0; visibility: hidden"
-                    >
-                      <!-- El texto se insertará por JS -->
-                    </p>
-                    <small id="char-count" class="contact__char-count">
-                      0 / 1000
-                    </small>
-                  </div>
                 </div>
 
+                <div class="contact__footer-info">
+                  <p
+                    id="contact-error-msg"
+                    class="form-error-msg"
+                    style="visibility: hidden"
+                  >
+                    *Campo obligatorio.
+                  </p>
+                  <span id="char-count" class="char-count">0 / 1000</span>
+                </div>
+
+                <!-- Botón con Icono de Máscara SVG -->
                 <button type="submit" class="contact__button">
-                  <span class="footer__icon footer__wapp-icon"></span>
-                  Enviar
+                  <span class="header__wapp-icon"></span> Enviar
                 </button>
               </form>
             </div>

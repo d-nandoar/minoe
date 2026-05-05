@@ -53,6 +53,29 @@ function setupContactConstraints() {
       }
     });
   });
+  // --- DENTRO DE setupContactConstraints() ---
+
+  // 1. Limpiar al entrar (Focus) solo si es error de formato
+  inEmail.addEventListener("focus", () => {
+    if (inEmail.classList.contains("error-field")) {
+      // Si el valor NO es vacío (o sea, es un correo inválido), lo borramos
+      if (inEmail.value.trim() !== "") {
+        inEmail.value = "";
+      }
+      // Quitamos el estado de error visual
+      inEmail.classList.remove("error-field");
+      // IMPORTANTE: No ocultamos el contactErrorMsg aquí para que el usuario
+      // termine de leer qué estaba mal, se ocultará al escribir.
+    }
+  });
+
+  // 2. Ocultar el mensaje solo cuando el usuario empiece a escribir (Input)
+  inEmail.addEventListener("input", () => {
+    inEmail.classList.remove("error-field");
+    if (!document.querySelector(".error-field")) {
+      contactErrorMsg.style.visibility = "hidden";
+    }
+  });
 }
 
 contactForm.addEventListener("submit", function (e) {
