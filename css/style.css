@@ -2759,6 +2759,6 @@
 
 @media (max-width: 320px) {
   body {
-    display: none;
+    /*display: none;*/
   }
 }
