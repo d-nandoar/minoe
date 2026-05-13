@@ -469,23 +469,23 @@
 .s3 {
   top: auto;
   left: auto;
-  font-size: 1.5em; /* Aumentamos el tamaño base significativamente */
+  font-size: 1.4em; /* Aumentamos el tamaño base significativamente */
 }
 
 /* 4. Animación contenida pero con más expansión (Se abren más) */
 .animate-sparkles .s1 {
-  --x: -15px;
-  --y: -17px; /* Explosión media hacia arriba-izq */
+  --x: -0.9375rem;
+  --y: -1.0625rem; /* Explosión media hacia arriba-izq */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 .animate-sparkles .s2 {
-  --x: 12px;
-  --y: 15px; /* Explosión media hacia abajo-der */
+  --x: 0.75rem;
+  --y: 0.9375rem; /* Explosión media hacia abajo-der */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 .animate-sparkles .s3 {
-  --x: 19px;
-  --y: -12px; /* Explosión media hacia la derecha */
+  --x: 1.1875rem;
+  --y: -0.75rem; /* Explosión media hacia la derecha */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 
@@ -499,7 +499,7 @@
   }
   100% {
     /* El movimiento es corto (máximo 18-22px) para que no se alejen mucho */
-    transform: translate(var(--x), var(--y)) scale(1.2) rotate(160deg);
+    transform: translate(var(--x), var(--y)) scale(1.1) rotate(140deg);
     opacity: 0;
   }
 }
