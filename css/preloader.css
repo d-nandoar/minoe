@@ -1,49 +1,31 @@
-:root {
-  --verde-minoe: #0e3b32; /* Tu color exacto */
-  --dorado: #d4af37;
-  --blanco: #ffffff;
-  --crema: #f2f1ed;
-  --bezier-lujo: cubic-bezier(0.65, 0, 0.35, 1);
-  /* VARIABLES PARA LA TEXTURA (OPCIÓN B) */
-  --textura-color: rgba(
-    255,
-    255,
-    255,
-    0.03
-  ); /* Color de los puntitos (blanco muy tenue) */
-  --textura-tamaño: 3px 3px; /* Qué tan fino es el grano */
-  --z-preloader: 2000;
-}
-
 /* --- CONTENEDOR MAESTRO --- */
 .preloader {
   position: fixed;
   inset: 0;
-
   z-index: var(--z-preloader);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: var(--crema);
+  background-color: var(--color-crema);
 }
 
 .preloader__bg-crema {
   position: absolute;
   inset: 0;
-  background-color: var(--crema);
-  z-index: 1;
+  background-color: var(--color-crema);
+  z-index: var(--z-base);
 }
 
-/* --- TELÓN VERDE (RECTÁNGULO RECTO) --- */
+/* --- TELÓN CREMA (RECTÁNGULO RECTO) --- */
 .preloader__curtain {
   position: absolute;
   top: 50%;
   bottom: 50%;
   left: 0;
   right: 0;
-  background-color: var(--crema);
-  z-index: 10;
+  background-color: var(--color-crema);
+  z-index: var(--z-preloader-curtain);
   opacity: 0;
 
   /* GENERACIÓN DE TEXTURA POR CÓDIGO USANDO VARIABLES */
@@ -67,15 +49,15 @@
 
 .preloader__content {
   position: relative;
-  z-index: 5;
+  z-index: var(--z-preloader-content);
   text-align: center;
 }
 
 /* --- LOGO Y CÍRCULO --- */
 .logo-wrapper {
   position: relative;
-  width: 220px; /* Tamaño ligeramente mayor */
-  height: 220px;
+  width: 13.75rem; /* Tamaño ligeramente mayor */
+  height: 13.75rem;
   margin: 0 auto;
 }
 
@@ -87,16 +69,16 @@
 
 .circle-path {
   fill: none;
-  stroke: var(--dorado);
+  stroke: var(--color-dorado);
   stroke-width: 1.5;
   stroke-dasharray: 302;
   stroke-dashoffset: 302;
-  animation: draw 4s var(--bezier-lujo) forwards;
+  animation: draw 2.5s var(--bezier-lujo) forwards;
 }
 
 .logo-img-container {
   position: absolute;
-  inset: 20px;
+  inset: 1.25rem;
   border-radius: 50%;
   overflow: hidden;
   clip-path: circle(50%);
@@ -107,49 +89,49 @@
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  animation: fadeIn 3s 2s var(--bezier-lujo) forwards;
+  animation: fadeIn 2.5s 0s var(--bezier-lujo) forwards;
 }
 
 .logo-reveal-mask {
   position: absolute;
   inset: 0;
-  background-color: var(--crema);
-  animation: reveal 3s 2s var(--bezier-lujo) forwards;
+  background-color: var(--color-crema);
+  animation: reveal 2.5s 0s var(--bezier-lujo) forwards;
 }
 
 /* --- TEXTOS (TAMAÑO INCREMENTADO) --- */
 .brand-name-container {
   overflow: hidden;
-  margin-top: 25px;
+  margin-top: 1.5625rem;
 }
 
 .brand-name {
   font-size: 3em; /* Aumentado de 2.2rem */
-  color: var(--verde-minoe);
-  letter-spacing: 10px; /* Más espaciado para lujo */
+  color: var(--color-verde);
+  letter-spacing: 0.625em; /* Más espaciado para lujo */
   font-weight: 300;
   transform: translateY(100%);
-  animation: slideUp 2.5s 3.5s var(--bezier-lujo) forwards;
+  animation: slideUp 1.5s 0.5s var(--bezier-lujo) forwards;
 }
 
 .brand-tagline {
   font-size: 0.9em; /* Aumentado ligeramente */
-  color: var(--verde-minoe);
-  letter-spacing: 4px;
-  margin-top: 12px;
+  color: var(--color-verde);
+  letter-spacing: 0.25rem;
+  margin-top: 0.75rem;
   opacity: 0;
-  animation: fadeIn 2s 4.5s forwards;
+  animation: fadeIn 1.5s 1.5s forwards;
 }
 
 .brand-est {
   font-size: 0.75em; /* Aumentado ligeramente */
-  color: var(--dorado);
-  letter-spacing: 6px;
-  margin-top: 18px;
+  color: var(--color-dorado);
+  letter-spacing: 0.375em;
+  margin-top: 1.125rem;
   font-weight: bold;
   opacity: 0;
   font-style: italic;
-  animation: fadeIn 2s 5.2s forwards;
+  animation: fadeIn 1.5s 1.5s forwards;
 }
 
 /* --- ANIMACIONES --- */

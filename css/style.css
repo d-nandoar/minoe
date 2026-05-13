@@ -6,34 +6,46 @@
 
 /* íconos svg */
 
+.header__hamb-icon,
 .header__arrow-icon,
 .header__cart-icon,
-.header__hamb-icon,
 .cart__trash-item,
-.cart__trash-allitems,
-.header__wapp-icon {
+.header__wapp-icon,
+.cart__trash-allitems {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
   cursor: pointer;
 }
 
+/* svg hamb */
+
 .header__hamb-icon {
   width: 2rem;
   height: 2rem;
-  background-color: var(--color-dorado);
+  background-color: var(--color-gris-oscuro);
   mask-image: url("../assets/icons/menu.svg");
   transition: background-color var(--transition-main);
 }
 
+@media (hover: hover) {
+  .header__hamb-icon:hover {
+    background-color: var(--color-dorado);
+  }
+}
+
+/* svg submenú */
+
 .header__arrow-icon {
-  margin-top: -0.125rem;
+  margin-top: -0.0938rem;
   width: 1.1rem;
   height: 1.1rem;
   background-color: var(--color-gris-oscuro);
   mask-image: url("../assets/icons/chevron.svg");
-  transition: transform var(--transition-main);
+  transition: transform var(--transition-second);
 }
+
+/* svg cart */
 
 .header__cart-icon {
   width: 2rem;
@@ -47,8 +59,18 @@
   width: 0.8rem;
   height: 1.1rem;
   mask-image: url("../assets/icons/trash.svg");
-  background-color: var(--color-dorado);
-  transition: background-color var(--transition-main);
+  background-color: var(--color-gris-oscuro);
+  opacity: 0.5;
+  transition:
+    background-color var(--transition-main),
+    opacity var(--transition-main);
+}
+
+@media (hover: hover) {
+  .cart__trash-item:hover {
+    background-color: var(--color-rojo);
+    opacity: 1;
+  }
 }
 
 .cart__trash-allitems {
@@ -67,18 +89,6 @@
   transition: background-color var(--transition-main);
 }
 
-@media (hover: hover) {
-  .header__hamb-url:hover {
-    background-color: var(--color-verde);
-  }
-}
-
-@media (hover: hover) {
-  .cart__trash-item:hover {
-    background-color: var(--color-rojo);
-  }
-}
-
 /* overlay nav y sidebar */
 
 .overlay,
@@ -87,7 +97,7 @@
   inset: 0;
   background: var(--color-overlay);
   z-index: var(--z-overlay);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(0.125rem);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -103,48 +113,38 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto; /* Permite detectar el clic para cerrar el carrito */
-
   touch-action: none; /* Bloquea cualquier intento de scroll en el fondo */
 }
 
-/* títulos nosotros - catálogo */
+/* títulos secciones (nosotros, catálogo y contacto) */
 
-.nosotros__about-h2,
+.nosotros__title,
 .catalog__title,
 .contact__title {
-  /* 1. Tipografía - Asegúrate de tenerla importada de Google Fonts */
-  font-family: "Playfair Display", serif;
-  /* font-size: 3.2em; Un poco más grande para lucir los remates */
-  font-weight: 500;
-  font-style: italic; /* El itálico en Playfair es extremadamente elegante */
-
-  /* 2. Alineación y estructura */
+  font-style: italic;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   width: 100%;
   gap: 2.5rem;
-  padding-bottom: 1rem;
   margin: 0 auto;
-
-  /* 3. Refinamiento visual */
-  letter-spacing: 0.05em; /* Menos espacio que en Montserrat para no romper la Serif */
-  /* text-transform: capitalize; "Joyería" se ve mejor que "JOYERÍA" en esta fuente */
+  letter-spacing: 0.0625rem;
 }
 
-/* 4. Líneas decorativas ultra-finas */
-.nosotros__about-h2::before,
-.nosotros__about-h2::after,
+/* líneas decorativas títulos */
+
+.nosotros__title::before,
+.nosotros__title::after,
 .catalog__title::before,
 .catalog__title::after,
 .contact__title::before,
 .contact__title::after {
   content: "";
-  height: 2px;
+  height: 0.125rem;
   flex-grow: 1;
-  max-width: 30px;
-  opacity: 0.6;
+  max-width: 1.875rem;
+  opacity: 0.5;
 }
 
 /* fondos categorías (catálogo) */
@@ -199,11 +199,8 @@
 }
 
 .header__contenedor {
-  /* width: 80%; */
-  /* max-width: 1524px; */
-
   width: 90%;
-  max-width: 1714.5px;
+  max-width: 107.5rem;
   margin: 0 auto;
 }
 
@@ -215,29 +212,8 @@
   display: flex;
 }
 
-.header__logo-a {
-  display: block;
-}
-
-/* .header__logo-img {
-  width: 3.5rem;
-  cursor: pointer;
-  border-radius: 50%;
-  transition:
-    transform var(--transition-main),
-    box-shadow var(--transition-main);
-}
-
-@media (hover: hover) {
-  .header__logo-img:hover {
-    transform: scale(1.05);
-    box-shadow: var(--sombra-dorada);
-  }
-} */
-
 .header__logo-h3 {
-  color: var(--color-gris-oscuro);
-  letter-spacing: 2px;
+  letter-spacing: 0.125rem;
   font-size: 1.5em;
   transition: color var(--transition-main);
 }
@@ -245,61 +221,58 @@
 @media (hover: hover) {
   .header__logo-h3:hover {
     color: var(--color-dorado);
-    /* transform: scale(1.05); */
-    /* transform: scale(1.05); */
-    /* box-shadow: var(--sombra-dorada); */
   }
 }
 
 /* nav */
 
-/* --- BOTÓN DE CIERRE MENÚ (Móviles) --- */
+.nav__contenedor,
+.header__ul {
+  gap: 1.25rem;
+}
+
+/* x de cierre de menú */
+
 .header__nav {
   position: relative;
 }
+
 .header__close-menu {
   display: none;
   position: absolute;
-  top: -4px;
-  right: 17px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 101;
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s var(--bezier-lujo);
+  top: -0.25rem;
+  right: 1.0625rem;
+  padding: 0.625rem;
+  transition: transform var(--bezier-lujo-main);
 }
 
 .header__close-menu-icon {
-  font-size: 2.2rem;
-  color: var(--color-gris-oscuro); /* Resalta sobre el verde esmeralda */
-  line-height: 1;
-  font-family: Arial, sans-serif;
-  font-weight: 200;
+  font-size: 2.125em;
+  line-height: var(--leading-none);
+  font-weight: 500;
 }
 
-/* Efecto hover (solo en dispositivos que lo soporten) */
 @media (hover: hover) {
   .header__close-menu:hover {
     transform: rotate(90deg);
   }
 }
 
-.nav__contenedor,
+/* ul */
+
 .header__ul {
-  gap: 1.25rem;
-  font-size: 0.95em;
+  font-size: 0.9025em;
 }
+
+/* links */
 
 .header__a {
   display: inline-block;
   position: relative;
-  letter-spacing: 0.06em;
-  color: var(--color-gris-oscuro);
-  cursor: pointer;
-  transition: color var(--transition-main);
+  letter-spacing: 0.0625rem;
+  transition:
+    color var(--transition-main),
+    transform var(--transition-main);
 }
 
 @media (hover: hover) {
@@ -308,68 +281,70 @@
   }
 }
 
-/* submenu */
+/* submenú */
 
 .header__li-contenedor {
   position: relative;
 }
 
+/* btn */
+
 .header__btn-submenu {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.3125rem;
-  color: var(--color-gris-oscuro);
+  gap: 0.1875rem;
 }
 
 .header__submenu {
   position: absolute;
   font-size: 0.9em;
   width: 150%;
-  top: 2.375rem;
+  top: 2.125rem;
   left: 0;
   background-color: var(--color-blanco);
-  border-top: 2px solid var(--borde-dorado-tenue);
   box-shadow: var(--sombra-card);
-  border-radius: 0.9375rem;
-  padding: 15px 0;
+  border-radius: var(--borde-radio-md);
+  padding: 1.25rem 0;
   opacity: 0;
   visibility: hidden;
   transition:
     background-color var(--transition-main),
-    padding-left var(--transition-main);
+    box-shadow var(--transition-main);
 }
 
-@media (hover: hover) {
-  .header__submenu:hover {
-    background-color: var(--color-gris-claro);
-    padding-left: 0.1875rem;
-  }
+.arrow-rotate {
+  transform: rotate(180deg);
+  transition: transform var(--transition-second);
 }
 
 .header__li-submenu {
   padding: 0.625rem;
 }
 
-.header__a-submenu {
-  transition: color var(--transition-main);
-}
-
 @media (hover: hover) {
+  .header__submenu:hover {
+    border-top: none;
+    background-color: var(--color-gris-claro);
+    box-shadow: var(--sombra-nav);
+  }
+
   .header__submenu:hover .header__a-submenu {
     color: var(--color-verde);
+    transform: translateX(0.25rem);
   }
-}
-@media (hover: hover) {
+
   .header__submenu .header__a-submenu:hover {
     color: var(--color-dorado);
   }
 }
 
+/* mostrar submenú */
+
 .submenu-open {
   opacity: 1;
   visibility: visible;
-  animation: fadeInUp var(--transition-second);
+  animation: fadeInUp var(--transition-second) forwards;
 }
 
 @keyframes fadeInUp {
@@ -383,11 +358,6 @@
   }
 }
 
-.arrow-rotate {
-  transform: rotate(180deg);
-  transition: transform var(--transition-main);
-}
-
 /* subrayado oculto para los links a */
 
 .header__a::after,
@@ -395,9 +365,8 @@
   content: "";
   position: absolute;
   width: 0;
-  height: 0.0938rem;
-  bottom: -0.125rem;
-  /* left: calc(50% - 25%); */
+  height: 0.125rem;
+  bottom: -0.1875rem;
   left: 0;
   background-color: var(--color-dorado);
   border-radius: 0.3125rem;
@@ -409,15 +378,15 @@
 
 /* Solo se muestra en el link a que tiene la clase 'active' */
 
-.a--active::after {
-  opacity: 1;
-  width: 100%;
-}
-
 /* links a */
 
 .a--active {
   color: var(--color-dorado);
+}
+
+.a--active::after {
+  opacity: 1;
+  width: 100%;
 }
 
 /* arrow */
@@ -427,7 +396,7 @@
   transition: background-color var(--transition-main);
 }
 
-/* fin subrayado */
+/* cart */
 
 .header__btn-cart {
   position: relative;
@@ -435,16 +404,12 @@
 }
 
 .navbar__cart-count {
-  /* display: none; */
   position: absolute;
-  top: -0.3rem;
-  right: 0.0313rem;
-  /* top: -0.75rem; */
-  /* right: -0.0625rem; */
+  top: -0.3125rem;
+  right: 0.0625rem;
   z-index: calc(
     var(--z-base) + 1
   ); /* Aseguramos que esté sobre las chispas (sparkles) */
-  color: var(--color-gris-oscuro);
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -452,7 +417,6 @@
   justify-content: center;
   text-align: center;
   align-items: center;
-  font-family: var(--fuente-cuerpo);
   pointer-events: none; /* Evita que el número interfiera con los clics en el icono */
   transition:
     background-color var(--transition-main),
@@ -463,6 +427,7 @@
   .header__btn-cart:hover .header__cart-icon {
     background-color: var(--color-dorado);
   }
+
   .header__btn-cart:hover .navbar__cart-count {
     color: var(--color-dorado);
   }
@@ -491,9 +456,7 @@
 /* 2. Estilo base de cada estrella (Más grandes y visibles) */
 .sparkle {
   position: absolute;
-  color: var(
-    --color-gris-oscuro
-  ); /* Tu Verde Bosque para contraste sobre crema */
+  color: var(--color-verde);
   opacity: 0;
   user-select: none;
   font-weight: bold;
@@ -511,18 +474,18 @@
 
 /* 4. Animación contenida pero con más expansión (Se abren más) */
 .animate-sparkles .s1 {
-  --x: -18px;
-  --y: -20px; /* Explosión media hacia arriba-izq */
+  --x: -1.125rem;
+  --y: -1.25rem; /* Explosión media hacia arriba-izq */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 .animate-sparkles .s2 {
-  --x: 15px;
-  --y: 18px; /* Explosión media hacia abajo-der */
+  --x: 0.9375rem;
+  --y: 1.125rem; /* Explosión media hacia abajo-der */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 .animate-sparkles .s3 {
-  --x: 22px;
-  --y: -15px; /* Explosión media hacia la derecha */
+  --x: 1.375rem;
+  --y: -0.9375rem; /* Explosión media hacia la derecha */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 
@@ -556,31 +519,25 @@
   }
 }
 
-/* 6. Número del carrito (aseguramos que no tape el centro) */
-/* .navbar__cart-count {
-  pointer-events: none;
-} */
-
 /* #endregion */
 
 /* =========================================
    3. CART
    ========================================= */
 
-/* #region */
+/* #region */ /* <-- seguir aquí */
 
 .sidebar {
   position: fixed;
-  right: -26.875rem;
+  /* right: -430px; */
+  right: 0;
   top: 0;
   bottom: 0;
   z-index: var(--z-sidebar);
   width: 85%; /* En móviles pequeños aprovecha el espacio */
   max-width: 26.25rem;
-
   height: 100dvh;
-
-  padding: 0 0.9375rem;
+  padding: 0 15px;
   background-color: var(--color-crema);
   box-shadow: var(--sombra-nav);
   border-radius: 0.9375rem 0 0 0.9375rem;
@@ -588,41 +545,45 @@
   flex-direction: column;
   background-color: var(--color-blanco);
   font-family: var(--fuente-cuerpo);
-  transition: right var(--transition-close-curve);
+  /* prueba */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  /* fin prueba */
+  /* transition: right var(--transition-close-curve); */
+  transition:
+    opacity 0.4s cubic-bezier(0.33, 0, 0.67, 1),
+    visibility 0.4s cubic-bezier(0.33, 0, 0.67, 1); /*close*/
 }
 
 .sidebar--active {
-  right: 0;
-  transition: right var(--transition-open-curve);
+  /* right: 0; */
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  /* transition: right var(--transition-open-curve); */
+  transition:
+    opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+    visibility 1s cubic-bezier(0.25, 1, 0.5, 1); /*open*/
 }
 
 /* x cerrar carrito */
 
-/* --- BOTÓN DE CIERRE CARRITO --- */
 .sidebar__close {
   position: absolute;
   top: -4px;
   right: 17px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 101; /* Por encima del contenido */
   padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s var(--bezier-lujo);
+  transition: transform var(--bezier-lujo-main);
 }
 
 .sidebar__close-icon {
-  font-size: 2rem; /* Tamaño elegante */
+  font-size: 2em;
   color: var(
     --color-crema
   ); /* Color crema para resaltar sobre el verde minoe */
-  line-height: 1;
-  font-family: Arial, sans-serif; /* Para una X más limpia */
-  font-weight: 200;
-  transition: color 0.3s ease;
+  line-height: var(--leading-none);
+  font-weight: 500;
 }
 
 @media (hover: hover) {
@@ -630,9 +591,6 @@
     transform: rotate(90deg); /* Efecto sutil de giro al hover */
   }
 }
-/* 
-.sidebar__close:hover .sidebar__close-icon {
-  color: var(--color-dorado); } */
 
 /* header cart */
 
@@ -1414,12 +1372,12 @@
   text-wrap: pretty; /* Mejora la distribución de las palabras */
 }
 
-.nosotros__about-h2 {
+.nosotros__title {
   padding-bottom: 0;
 }
 
-.nosotros__about-h2::before,
-.nosotros__about-h2::after {
+.nosotros__title::before,
+.nosotros__title::after {
   background-color: var(--color-gris-oscuro);
 }
 
@@ -2491,7 +2449,7 @@
 
   /* fin hero */
 
-  .nosotros__about-h2,
+  .nosotros__title,
   .catalog__title {
     font-size: 2.2em; /* Reducimos el tamaño para que no empuje las líneas */
     gap: 1rem; /* Reducimos el espacio entre el texto y la línea */
@@ -2675,14 +2633,14 @@
     font-size: 0.9em;
   }
 
-  .nosotros__about-h2,
+  .nosotros__title,
   .catalog__title {
     font-size: 1.8em; /* Tamaño más manejable para pantallas de 320px */
     gap: 0.8rem;
   }
 
-  .nosotros__about-h2::before,
-  .nosotros__about-h2::after,
+  .nosotros__title::before,
+  .nosotros__title::after,
   .catalog__title::before,
   .catalog__title::after {
     max-width: 20px; /* Líneas un poco más cortas para asegurar que aparezcan */
@@ -2759,6 +2717,6 @@
 
 @media (max-width: 320px) {
   body {
-    /*display: none;*/
+    display: none;
   }
 }

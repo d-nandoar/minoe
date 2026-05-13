@@ -17,6 +17,6 @@ window.addEventListener("load", () => {
       // ENVIAR SEÑAL AL HERO
       const eventoRevelado = new CustomEvent("paginaRevelada");
       window.dispatchEvent(eventoRevelado);
-    }, 1500);
-  }, 5700);
+    }, 1250);
+  }, 2500);
 });
