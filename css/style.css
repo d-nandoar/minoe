@@ -21,8 +21,8 @@
 /* svg hamb */
 
 .header__hamb-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   background-color: var(--color-gris-oscuro);
   mask-image: url("../assets/icons/menu.svg");
   transition: background-color var(--transition-main);
@@ -48,8 +48,8 @@
 /* svg cart */
 
 .header__cart-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   background-color: var(--color-gris-oscuro);
   mask-image: url("../assets/icons/cart_new.svg");
   transition: background-color var(--transition-main);

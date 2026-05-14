@@ -283,13 +283,13 @@ function updateUI() {
     if (count > 99) {
       cartCount.innerText = "99+";
       cartCount.style.fontSize = "0.75em";
-      cartCount.style.top = "-0.625rem";
+      cartCount.style.top = "-0.6875rem";
       cartCount.style.right = "-0.4063rem";
     } else {
       cartCount.innerText = count;
-      cartCount.style.fontSize = "0.8075em";
-      cartCount.style.top = "-0.3rem";
-      cartCount.style.right = ".0313rem";
+      cartCount.style.fontSize = "0.75em";
+      cartCount.style.top = "-0.5625rem";
+      cartCount.style.right = "-0.125rem";
     }
   } else {
     cartCount.style.display = "none"; // Por si acaso llega a 0 aquí
