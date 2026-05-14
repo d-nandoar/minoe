@@ -254,7 +254,7 @@
 
 @media (hover: hover) {
   .header__close-menu:hover {
-    transform: rotate(90deg);
+    transform: rotate(90deg); /* Efecto sutil de giro al hover */
   }
 }
 
@@ -499,7 +499,7 @@
   }
   100% {
     /* El movimiento es corto (máximo 18-22px) para que no se alejen mucho */
-    transform: translate(var(--x), var(--y)) scale(1) rotate(140deg);
+    transform: translate(var(--x), var(--y)) scale(1) rotate(120deg);
     opacity: 0;
   }
 }
@@ -525,33 +525,28 @@
    3. CART
    ========================================= */
 
-/* #region */ /* <-- seguir aquí */
+/* #region */
 
 .sidebar {
   position: fixed;
-  /* right: -430px; */
   right: 0;
   top: 0;
   bottom: 0;
   z-index: var(--z-sidebar);
-  width: 85%; /* En móviles pequeños aprovecha el espacio */
-  max-width: 26.25rem;
+  width: 85%;
+  max-width: 23.75rem;
   height: 100dvh;
-  padding: 0 15px;
+  padding: 0 0.9375rem;
   background-color: var(--color-crema);
   box-shadow: var(--sombra-nav);
   border-radius: 0.9375rem 0 0 0.9375rem;
   display: flex;
   flex-direction: column;
   background-color: var(--color-blanco);
-  font-family: var(--fuente-cuerpo);
-  /* prueba */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transform: translateX(0.625rem);
-  /* fin prueba */
-  /* transition: right var(--transition-close-curve); */
   transition:
     opacity 0.4s cubic-bezier(0.33, 0, 0.67, 1),
     visibility 0.4s cubic-bezier(0.33, 0, 0.67, 1),
@@ -559,41 +554,14 @@
 }
 
 .sidebar--active {
-  /* right: 0; */
   opacity: 1;
   visibility: visible;
   pointer-events: all;
   transform: translateX(0);
-  /* transition: right var(--transition-open-curve); */
   transition:
-    opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
-    visibility 1s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 1s cubic-bezier(0.25, 1, 0.5, 1); /*open*/
-}
-
-/* x cerrar carrito */
-
-.sidebar__close {
-  position: absolute;
-  top: -4px;
-  right: 17px;
-  padding: 10px;
-  transition: transform var(--bezier-lujo-main);
-}
-
-.sidebar__close-icon {
-  font-size: 2em;
-  color: var(
-    --color-crema
-  ); /* Color crema para resaltar sobre el verde minoe */
-  line-height: var(--leading-none);
-  font-weight: 500;
-}
-
-@media (hover: hover) {
-  .sidebar__close:hover {
-    transform: rotate(90deg); /* Efecto sutil de giro al hover */
-  }
+    opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    visibility 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /*open*/
 }
 
 /* header cart */
@@ -605,21 +573,43 @@
   margin-top: 0.625rem;
   border-radius: 0.9375rem;
   text-align: center;
-  letter-spacing: 0.0625em;
   background-color: var(--color-verde);
   color: var(--color-crema);
 }
 
 .sidebar__title {
   font-family: var(--fuente-cuerpo);
+  letter-spacing: 0.0625rem;
 }
 
+/* x cerrar carrito */
+
+.sidebar__close {
+  position: absolute;
+  top: -0.25rem;
+  right: 1.0625rem;
+  padding: 0.625rem;
+  transition: transform var(--bezier-lujo-main);
+}
+
+.sidebar__close-icon {
+  font-size: 2.125em;
+  color: var(--color-crema);
+  line-height: var(--leading-none);
+  font-weight: 500;
+}
+
+@media (hover: hover) {
+  .sidebar__close:hover {
+    transform: rotate(90deg); /* Efecto sutil de giro al hover */
+  }
+}
 /* main cart */
 
 .sidebar__content {
   flex: 1;
   overflow-y: auto;
-  overscroll-behavior: contain; /* CRUCIAL: evita que el scroll "salte" al body cuando llegas al final *
+  overscroll-behavior: contain; /* CRUCIAL: evita que el scroll "salte" al body cuando llegas al final */
   -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
   padding: 0.625rem 0.9375rem;
   border: 1px solid var(--borde-verde-tenue);
@@ -644,7 +634,7 @@
   width: 65%;
   font-size: 0.75em;
   font-weight: 700;
-  letter-spacing: 0.0625em;
+  letter-spacing: 0.0625rem;
 }
 
 .cart-item__name {
@@ -676,15 +666,14 @@
   padding: 0.125rem 0.3125rem;
   border-radius: 1.25rem;
   font-weight: 700;
-  font-size: 0.75em;
-  letter-spacing: 0.0625em;
+  letter-spacing: 0.0625rem;
 }
 
 .qty-selector__btn {
   border: none;
   background-color: none;
   cursor: pointer;
-  font-size: 1.2em;
+  font-size: 0.9em;
 }
 
 /* deshabilita btn +/- */
@@ -696,7 +685,7 @@
 }
 
 .qty-selector__value {
-  font-size: 0.96em;
+  font-size: 0.72em;
   min-width: 0.9375rem;
   text-align: center;
 }
@@ -718,10 +707,9 @@
   border: 1px solid var(--borde-verde-tenue);
   box-shadow: var(--sombra-card);
   background-color: var(--color-crema);
-  color: var(--color-gris-oscuro);
   border-radius: 0.9375rem;
   margin-bottom: 0.625rem;
-  letter-spacing: 0.0625em;
+  letter-spacing: 0.0625rem;
   font-size: 0.8em;
   font-weight: 700;
 }
@@ -738,7 +726,7 @@
   width: 100%;
   background-color: var(--color-blanco) !important;
   color: var(--color-gris-placeholder);
-  font-size: 0.9em;
+  font-size: 0.9em; /* del 0.8em*/
   font-weight: 500;
   padding: 0.4375rem 0.625rem;
   margin-bottom: 0.5rem;
@@ -755,6 +743,13 @@
   -webkit-appearance: none;
   appearance: none;
   transform: translateZ(0); /* Clave para la nitidez */
+}
+
+/* inputs nombre y apellido */
+
+.cart-form__row {
+  display: flex;
+  gap: 0.5rem;
 }
 
 /* inputs focus */
@@ -777,13 +772,6 @@
   -webkit-text-fill-color: var(--color-gris-placeholder) !important;
 }
 
-/* inputs nombre y apellido */
-
-.cart-form__row {
-  display: flex;
-  gap: 8px;
-}
-
 /* --- ESTADOS DE ERROR EN INPUTS --- */
 
 .error-field {
@@ -799,13 +787,6 @@
   transition:
     border-color var(--transition-main),
     background-color var(--transition-main);
-}
-
-/* Evitar sombras o estilos extraños cuando el usuario hace clic en el campo con error */
-.error-field:focus {
-  border-color: var(--color-error-field) !important;
-  box-shadow: none !important;
-  outline: none !important;
 }
 
 /* animación de inputs con error */
@@ -824,14 +805,6 @@
     transform: translateX(var(--shake-distance));
   }
 }
-
-/* .error-field {
-  Usamos las variables para tiempo y nombre de animación
-  animation: shake var(--shake-duration) ease-in-out 0s 2;
-  border: 1px solid var(--color-error-field) !important;
-  Optimizamos el rendimiento para que la sacudida sea fluida
-  will-change: transform;
-} */
 
 /* subtotal */
 
@@ -874,7 +847,6 @@
   align-items: center;
   justify-content: center;
   gap: 0.1875rem;
-  /* font-size: 1.1em; */
   box-shadow: var(--sombra-nav);
   text-transform: none;
   transition:
@@ -924,21 +896,21 @@
   justify-content: center;
   min-height: 18.75rem;
   padding: 2rem;
-  letter-spacing: 0.0625em;
+  letter-spacing: 0.0625rem;
 }
 
 .cart-empty__message {
-  font-size: 1.2em;
+  font-size: 0.95em;
   color: var(--color-gris-oscuro);
   margin-bottom: 1.5rem;
   font-style: italic;
 }
 
 .cart-empty__link {
-  color: var(--color-dorado);
+  color: var(--color-verde);
   text-decoration: none;
-  font-size: 1.1em;
-  border-bottom: 1px solid var(--color-dorado);
+  font-size: 1em;
+  border-bottom: 1px solid var(--color-verde);
   padding-bottom: 0.25rem;
   cursor: pointer;
   font-weight: 700;
@@ -950,8 +922,8 @@
 
 @media (hover: hover) {
   .cart-empty__link:hover {
-    border-bottom: 1px solid var(--color-verde);
-    color: var(--color-verde);
+    border-bottom: 1px solid var(--color-dorado);
+    color: var(--color-dorado);
     text-shadow: var(--sombra-verde-hover);
   }
 }
