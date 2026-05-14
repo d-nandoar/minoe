@@ -405,8 +405,8 @@
 
 .navbar__cart-count {
   position: absolute;
-  top: -0.3125rem;
-  right: 0.0625rem;
+  top: -0.5625rem;
+  right: -0.125rem;
   z-index: calc(
     var(--z-base) + 1
   ); /* Aseguramos que esté sobre las chispas (sparkles) */
@@ -474,18 +474,18 @@
 
 /* 4. Animación contenida pero con más expansión (Se abren más) */
 .animate-sparkles .s1 {
-  --x: -0.9375rem;
-  --y: -1.0625rem; /* Explosión media hacia arriba-izq */
+  --x: -15px;
+  --y: -17px; /* Explosión media hacia arriba-izq */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 .animate-sparkles .s2 {
-  --x: 0.75rem;
-  --y: 0.9375rem; /* Explosión media hacia abajo-der */
+  --x: 12px;
+  --y: 15px; /* Explosión media hacia abajo-der */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 .animate-sparkles .s3 {
-  --x: 1.1875rem;
-  --y: -0.75rem; /* Explosión media hacia la derecha */
+  --x: 19px;
+  --y: -12px; /* Explosión media hacia la derecha */
   animation: sparkle-burst 0.7s ease-out forwards;
 }
 
@@ -499,7 +499,7 @@
   }
   100% {
     /* El movimiento es corto (máximo 18-22px) para que no se alejen mucho */
-    transform: translate(var(--x), var(--y)) scale(1.1) rotate(140deg);
+    transform: translate(var(--x), var(--y)) scale(1) rotate(140deg);
     opacity: 0;
   }
 }
