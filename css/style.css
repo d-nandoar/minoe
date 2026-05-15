@@ -127,7 +127,7 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-  gap: 2.5rem;
+  gap: 1.5rem;
   margin: 0 auto;
   letter-spacing: 0.0625rem;
 }
@@ -937,7 +937,7 @@
 /* #region */
 
 .hero__slider {
-  /* height: 100vh; */
+  width: 100%;
   height: 100svh;
   margin-top: -3.75rem;
   position: relative;
@@ -948,7 +948,7 @@
 .hero__item-list {
   /* preloader */
   opacity: 0; /* invisible */
-  transform: translateY(30px);
+  transform: translateY(1.875rem);
 
   /* estilos iniciales */
   position: absolute;
@@ -978,6 +978,8 @@
   opacity: 1;
   z-index: var(--z-hero-active);
 }
+
+/* degradado sobre los wallpapers */
 
 .hero__item-list::after {
   content: "";
@@ -1010,26 +1012,29 @@
   align-items: flex-start;
   width: 41rem;
   color: var(--color-blanco);
-  letter-spacing: 0.0625em;
+  letter-spacing: 0.0625rem;
+}
+
+.hero__h2-list {
+  margin-left: -0.125rem; /* ajuste visual */
 }
 
 /* subtítulo (h6) */
 
 .hero__h6-list {
-  letter-spacing: 0.125em;
-  padding-left: 0.0625rem;
+  letter-spacing: 0.125rem;
 }
 
 /* párrafo (span) */
 
 .hero__span-list {
+  font-style: italic;
   font-weight: 700;
 }
 
 /* párrafo (p) */
 
 .hero__p-list {
-  padding-left: 0.0625rem;
   margin: 2.5rem 0 1.25rem 0;
   text-align: justify;
 }
@@ -1039,9 +1044,8 @@
 .hero__a-list {
   cursor: pointer;
   padding: 0.6rem 0.5rem;
-  margin-left: 0.0625rem;
   border-radius: 0.9375rem;
-  font-size: 0.875em;
+  font-size: 0.8em;
   background-color: var(--color-dorado);
   box-shadow: var(--sombra-dorada);
   transition:
@@ -1058,7 +1062,7 @@
   }
 }
 
-/* animación hero textos*/
+/* animación hero__comtent-list (textos)*/
 
 @keyframes showContent {
   to {
@@ -1072,8 +1076,8 @@
 .hero__item-list--active .hero__h6-list,
 .hero__item-list--active .hero__p-list,
 .hero__item-list--active .hero__a-list {
-  transform: translateY(30px);
-  filter: blur(20px);
+  transform: translateY(1.875rem);
+  filter: blur(1.25rem);
   opacity: 0;
   animation: showContent 0.5s 0.7s ease-in-out 1 forwards;
 }
@@ -1088,53 +1092,10 @@
   animation-delay: 1.6s;
 }
 
-/* hero - arrows */
-
-.hero__arrows {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.1875rem;
-  top: 93%;
-  left: calc(75% - 2.0844rem);
-  z-index: var(--z-slider-arrows);
-}
-
-/* botones */
-
-.hero__prev-arow,
-.hero__next-arow {
-  background-color: var(--color-dorado);
-  border: none;
-  font-family: var(--fuente-arrow);
-  text-align: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.3125rem;
-  font-size: 1.3em;
-  color: var(--color-blanco);
-  box-shadow: var(--sombra-dorada);
-  transition:
-    background-color var(--transition-main),
-    box-shadow var(--transition-main),
-    text-shadow var(--transition-main);
-}
-
-@media (hover: hover) {
-  .hero__prev-arow:hover,
-  .hero__next-arow:hover {
-    background-color: var(--color-verde);
-    box-shadow: var(--sombra-verde-hover);
-    text-shadow: var(--sombra-texto-boton);
-  }
-}
-
 /* hero - contenedor imágenes (miniaturas) */
 
 .hero__thumbnail {
   position: absolute;
-  /* bottom: 8%; */
   bottom: 4%;
   left: calc(75% - 20%);
   z-index: var(--z-slider-thumb);
@@ -1144,26 +1105,16 @@
   min-height: 16.25rem;
 }
 
-.hero__thumbnail::-webkit-scrollbar {
-  width: 0; /* quita la scrollbar de thumbmail */
-}
-
 /* contenedor imagen (miniatura) */
 
 .hero__item-thumbnail {
   width: 24%; /* contenedor imagen */
-
-  /* filter: brightness(0.4); */
   filter: grayscale(60%);
-
   border-radius: 0.9375rem;
   overflow: hidden;
   cursor: pointer;
-  /* border: 2px solid var(--color-crema); */
-
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: var(--sombra-nav);
-
   transition:
     filter var(--transition-main),
     border var(--transition-main),
@@ -1174,13 +1125,12 @@
 /* miniaturas active */
 
 .hero__item-thumbnail--active {
-  /* filter: brightness(1);
-  border: 2px solid var(--color-verde); */
-
-  border: 1.5px solid #2d5a27; /* Tu verde de marca */
-  filter: grayscale(0%) brightness(1.1); /* Se iluminan y cobran color */
-  transform: translateY(-5px); /* Un pequeño salto para indicar selección */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid var(--color-verde); /* Tu verde de marca */
+  filter: grayscale(0%) brightness(1.15); /* Se iluminan y cobran color */
+  transform: translateY(
+    -0.3125rem
+  ); /* Un pequeño salto para indicar selección */
+  box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.3);
 }
 
 /* imagen (miniatura)*/
@@ -1188,19 +1138,17 @@
 .hero__img--thumbnail {
   width: 100%; /* imagen */
   height: 100%;
-  /* border-radius: 0.9375rem; */
   object-fit: cover;
-  /* object-position: -142px 0; */
 }
 
 /* texto miniaturas */
 
 .hero__content-thumbnail {
   position: absolute;
-  inset: auto 0.625rem 0.625rem 0.625rem; /*(top, r, b, left)*/
+  inset: auto 0.625rem 0.625rem 0.625rem; /*(top, r, b, l)*/
   font-size: 0.95em;
   text-align: center;
-  letter-spacing: 0.0625em;
+  letter-spacing: 0.0625rem;
 }
 
 .hero__span-thumbnail {
@@ -1214,6 +1162,7 @@
 }
 
 /* #endregion */
+
 /* =========================================
    5. NOSOTROS
    ========================================= */
@@ -1221,67 +1170,44 @@
 /* #region */
 
 .nosotros {
-  /* height: 100vh; */
   background-color: var(--color-crema);
-  color: var(--color-gris-oscuro);
   padding: 5rem 0;
-  letter-spacing: 1px;
+  letter-spacing: 0.0625rem;
   scroll-margin-top: 3.75rem;
 }
 
+/* contenedor principal */
+
 .nosotros__content {
-  /* width: 80%; */
-  /* max-width: 152s4px; */
   width: 90%;
-  max-width: 1714.5px;
-  /* height: 100px; */
+  max-width: 107.5rem;
   margin: 0 auto;
 }
 
-/* about */
+/* nosotros__about-content (bloque 1) */
 
-.nosotros__about {
-  width: 100%;
-  /* max-width: 1524px; */
-  /* height: 100px; */
-  /* margin: 0 auto; */
-  /* border: 1px solid #ccc; */
-}
-
-/* --- Contenedor Principal --- */
 .nosotros__about-content {
-  display: grid;
-  /* Definimos dos filas: la primera (imagen) se ajusta al contenido, 
-     la segunda (texto) ocupa el resto */
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  gap: 60px; /* Reducimos un poco el gap para compactar */
   width: 100%;
-  /* max-width: 1524px; */
-  max-width: 1714.5px;
+  display: grid;
+  grid-template-columns: 1fr; /* 1 col */
+  grid-template-rows: auto 1fr; /* 2 filas (img y texto) */
+  gap: 3.75rem;
+  width: 100%;
   margin: 0 auto;
 }
 
-/* --- Contenedor de la Imagen --- */
+/* --- imagen banner --- */
+
 .nosotros__about-image {
   position: relative;
-  /* border-radius: 40px 40px 0 0; */
   width: 100%;
   overflow: hidden;
-  border-radius: 40px 40px 0 0;
+  border-radius: 2.5rem 2.5rem 0 0;
+  aspect-ratio: 32 / 9; /* banner delgado*/
+  max-height: 26.5rem;
 
-  /* CAMBIO CLAVE: Para que sea mucho más delgada (75% menos de altura visual), 
-     ajustamos el ratio. Un 32/9 o similar la hace tipo "banner" delgado. */
-  aspect-ratio: 32 / 9;
+  /* degradado del color crema */
 
-  /* Evitamos que crezca demasiado en pantallas grandes */
-  max-height: 424px;
-
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); */
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
-
-  /* Perfeccionamos la máscara: la clave es empezar el "negro" mucho más tarde */
-  /* Máscara ultra-suave mejorada */
   -webkit-mask-image: linear-gradient(
     to top,
     transparent 0%,
@@ -1302,54 +1228,20 @@
   display: block;
   width: 100%;
   height: 100%;
-  /* Con 'cover' la imagen no se deforma, se recorta para llenar el espacio */
   object-fit: cover;
-  /* Ajusta esto para centrar lo más importante de la joya/modelo */
   object-position: center;
 }
 
-/* --- Tu Gradiente (Se mantiene intacto) --- */
-/* .nosotros__about-image::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 1;
-} */
+/* --- Texto --- */
 
-/* --- Contenedor del Texto --- */
-/* --- Contenedor del Texto --- */
 .nosotros__about-minoe {
-  display: flex; /* Cambiamos a flex para mejor control de centrado vertical del texto */
-  /* flex-direction: column; */
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem;
   width: 100%;
-  max-width: 85%; /* Estrechar el texto lo hace ver más elegante/lujo */
+  max-width: 85%;
   margin: 0 auto;
-}
-
-.nosotros__about-p {
-  text-align: center; /* Mucho más elegante que el justificado */
-  font-size: 1.1rem;
-  line-height: 1.8; /* Un interlineado amplio respira lujo */
-  color: var(--color-gris-oscuro);
-
-  max-width: 750px; /* Evita que el texto se estire demasiado a lo ancho */
-  margin: 0 auto; /* Centra el bloque de texto */
-
-  text-wrap: pretty; /* Mejora la distribución de las palabras */
-}
-
-.nosotros__title {
-  padding-bottom: 0;
 }
 
 .nosotros__title::before,
@@ -1359,35 +1251,39 @@
 
 .nosotros__about-h4 {
   text-align: center;
-  /* margin-bottom: 30px; */
   font-size: 1.25em;
   font-style: italic;
   max-width: 80%; /* Estrecha un poco la frase para que respire */
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
-/* info */
+.nosotros__about-p {
+  text-align: center;
+  font-size: 1.1em;
+  line-height: 1.8;
+  max-width: 46.875rem;
+  margin: 0 auto;
+  text-wrap: pretty; /* Mejora la distribución de las palabras */
+}
 
-/* Contenedor Maestro */
-/* --- Contenedor Maestro --- */
+/* nosotros-cards (bloque 2) */
+
 .nosotros-cards {
   width: 100%;
-  /* max-width: 1524px; */
-  max-width: 1714.5px;
-  margin-top: 60px;
+  margin-top: 3.75rem;
 }
 
 .nosotros-cards__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16.25rem, 1fr));
   gap: 1.5rem;
-  perspective: 1500px;
+  perspective: 93.75rem;
 }
 
 .card-flip {
-  height: 320px;
+  height: 20rem;
   width: 100%;
   cursor: pointer;
 }
@@ -1412,19 +1308,17 @@
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 40px;
+  border-radius: 2.5rem;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.3);
 }
 
-/* --- FRENTE (Corregido para imágenes HTML) --- */
 .card-flip__front {
   display: flex;
   align-items: flex-end; /* Texto abajo */
   justify-content: center;
   padding-bottom: 2rem;
   font-size: 0.85em;
-  background-color: #222;
 }
 
 .card-flip__img {
@@ -1433,7 +1327,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Mantiene la proporción sin deformar */
+  object-fit: cover;
   z-index: 0;
 }
 
@@ -1449,25 +1343,25 @@
 .card-flip__front-text {
   position: relative;
   z-index: 2; /* Por encima de la imagen y el degradado */
-  color: var(--blanco);
+  color: var(--color-blanco);
   text-transform: uppercase;
-  letter-spacing: 3px;
-  /* font-size: 0.85em !important; */
+  letter-spacing: 0.1875rem;
   font-weight: 700;
-  border-bottom: 2px solid var(--dorado);
-  padding-bottom: 5px;
+  border-bottom: 0.125rem solid var(--color-dorado);
+  padding-bottom: 0.3125rem;
 }
 
-/* --- INDICADOR + --- */
+/* --- indicador + --- */
+
 .nosotros__card-indicator {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
-  width: 35px;
-  height: 35px;
+  width: 2.1875rem;
+  height: 2.1875rem;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   display: flex;
@@ -1477,14 +1371,14 @@
 }
 
 .nosotros__indicator-icon {
-  color: #fff;
-  font-size: 1.2rem;
+  color: var(--color-blanco);
+  font-size: 1.4em;
   font-weight: 300;
 }
 
 /* --- REVERSO --- */
 .card-flip__back {
-  background-color: var(--verde-minoe);
+  background-color: var(--color-verde);
   transform: rotateY(180deg);
   display: flex;
   align-items: center;
@@ -1522,7 +1416,7 @@
 .card-flip__text {
   font-size: 0.9em;
   line-height: 1.8;
-  font-weight: 300;
+  font-weight: 500;
   opacity: 0.9;
 }
 
@@ -1532,7 +1426,7 @@
    6. CATALOGO
    ========================================= */
 
-/* #region */
+/* #region */ /* <-- aquí */
 
 .catalog__container {
   scroll-margin-top: 3.75rem;
@@ -1930,7 +1824,7 @@
     background-color var(--transition-main),
     box-shadow var(--transition-main);
 }
-/* 
+/*
 .contact__btn-icon {
   width: 20px;
   height: 20px;
