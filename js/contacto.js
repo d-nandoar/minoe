@@ -38,91 +38,62 @@ function setupContactConstraints() {
     input.addEventListener("input", (e) => {
       // Reemplaza cualquier cosa que NO sea letra o espacio
       e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
-      input.classList.remove("error-field");
     });
   });
 
+  // --- LIMPIEZA INTERACTIVA AL ESCRIBIR ---
   allInputs.forEach((input) => {
     input.addEventListener("input", () => {
+      // Remueve el borde rojo inmediatamente al presionar una tecla
       input.classList.remove("error-field");
+
       if (input.id === "motivo") {
         charCount.innerText = `${input.value.length} / 1000`;
       }
+
+      // Oculta el mensaje general solo si ya no quedan campos con error
       if (!document.querySelector(".error-field")) {
         contactErrorMsg.style.visibility = "hidden";
       }
     });
-  });
-  // --- DENTRO DE setupContactConstraints() ---
-
-  // 1. Limpiar al entrar (Focus) solo si es error de formato
-  inEmail.addEventListener("focus", () => {
-    if (inEmail.classList.contains("error-field")) {
-      // Si el valor NO es vacío (o sea, es un correo inválido), lo borramos
-      if (inEmail.value.trim() !== "") {
-        inEmail.value = "";
-      }
-      // Quitamos el estado de error visual
-      inEmail.classList.remove("error-field");
-      // IMPORTANTE: No ocultamos el contactErrorMsg aquí para que el usuario
-      // termine de leer qué estaba mal, se ocultará al escribir.
-    }
-  });
-
-  // 2. Ocultar el mensaje solo cuando el usuario empiece a escribir (Input)
-  inEmail.addEventListener("input", () => {
-    inEmail.classList.remove("error-field");
-    if (!document.querySelector(".error-field")) {
-      contactErrorMsg.style.visibility = "hidden";
-    }
   });
 }
 
 contactForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  // 1. OCULTAR TODO ANTES DE VALIDAR
-  // Esto evita que cualquier mensaje (nativo o tuyo) parpadee
+  // 1. OCULTAR VISUALES ANTES DE VALIDAR
   contactErrorMsg.style.visibility = "hidden";
   allInputs.forEach((i) => i.classList.remove("error-field"));
 
-  let firstError = null;
-  let hasError = false;
+  // --- VALIDACIONES SECUENCIALES (PASO A PASO) ---
 
-  // --- VALIDACIONES ---
-
-  // Validar Nombre (Obligatorio)
+  // Paso 1: Validar Nombre
   if (!inNombre.value.trim()) {
-    showError(inNombre, "* Campo obligatorio.");
-    hasError = true;
-    firstError = inNombre;
+    showError(inNombre, "*Complete la información.");
+    inNombre.focus();
+    return; // Detiene la ejecución aquí
   }
 
-  // Validar Email (Obligatorio + Formato)
-  if (!hasError) {
-    if (!inEmail.value.trim()) {
-      showError(inEmail, "* Campo obligatorio.");
-      hasError = true;
-      firstError = inEmail;
-    } else if (!validateEmail(inEmail.value)) {
-      showError(inEmail, "Correo inválido (ej. nombre@correo.com)");
-      hasError = true;
-      firstError = inEmail;
-    }
+  // Paso 2: Validar Email (Presencia)
+  if (!inEmail.value.trim()) {
+    showError(inEmail, "*Complete la información.");
+    inEmail.focus();
+    return; // Detiene la ejecución aquí
   }
 
-  // Validar Mensaje (Obligatorio)
-  if (!hasError && !inMotivo.value.trim()) {
-    showError(inMotivo, "* Campo obligatorio.");
-    hasError = true;
-    firstError = inMotivo;
+  // Paso 3: Validar Email (Formato)
+  if (!validateEmail(inEmail.value)) {
+    showError(inEmail, "Correo inválido (ej. nombre@correo.com)");
+    inEmail.focus();
+    return; // Detiene la ejecución aquí
   }
 
-  if (hasError) {
-    // Si realmente hay un error, lo mostramos nosotros
-    contactErrorMsg.style.visibility = "visible";
-    if (firstError) firstError.focus();
-    return;
+  // Paso 4: Validar Mensaje
+  if (!inMotivo.value.trim()) {
+    showError(inMotivo, "*Complete la información.");
+    inMotivo.focus();
+    return; // Detiene la ejecución aquí
   }
 
   // --- PROCESO DE ENVÍO (Si todo está OK) ---
@@ -149,6 +120,7 @@ contactForm.addEventListener("submit", function (e) {
 
   // 'encodeURIComponent' transforma el mensaje en un formato que el navegador entiende como dirección web.
   const finalMsgContact = encodeURIComponent(textoMensaje);
+
   // Abre una nueva pestaña con el chat de WhatsApp listo para enviar el mensaje.
   window.open(
     `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMERO}&text=${finalMsgContact}`,
@@ -162,4 +134,5 @@ contactForm.addEventListener("submit", function (e) {
   charCount.innerText = "0 / 1000";
 });
 
+// Inicialización de restricciones y escuchadores
 setupContactConstraints();

@@ -127,9 +127,17 @@
   --color-crema: #f2f1e6;
   --crema: #f2f1ed;
   --color-blanco: #ffffff;
+  --color-bg-contacto: #fcfcfc;
   --blanco: #ffffff;
   --color-gris-oscuro: #2d2d2d;
   --color-gris-claro: #f9f9f9;
+  --color-gris-divider: rgba(255, 255, 255, 0.2);
+  --color-gris-copy: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Gris tenue para el copyright */
   --color-gris-placeholder: #051411;
   --color-rojo: #e74c3c;
   --color-error-field: #a13d3d;
