@@ -1885,7 +1885,7 @@
 
 .footer__fb-icon {
   width: 1.7625rem;
-  height: 1.7rem;
+  height: 1.7625rem;
   background-color: var(--color-blanco);
   -webkit-mask-image: url("../assets/icons/facebook.svg");
   mask-image: url("../assets/icons/facebook.svg");
@@ -1906,7 +1906,7 @@
 
 .footer__wapp-icon {
   width: 2rem;
-  height: 1.6875rem;
+  height: 1.8125rem;
   background-color: var(--color-blanco);
   -webkit-mask-image: url("../assets/icons/wapp.svg");
   mask-image: url("../assets/icons/wapp.svg");
@@ -2199,7 +2199,7 @@
 
   .footer__fb-icon {
     width: 1.575rem;
-    height: 1.5125rem;
+    height: 1.45rem;
     -webkit-mask-size: 74%;
     mask-size: 74%;
   }

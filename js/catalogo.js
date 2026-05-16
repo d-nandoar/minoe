@@ -308,7 +308,7 @@ function renderProducts(cat) {
     const nombreFormateado = nombresCategorias[cat.toLowerCase()] || cat;
 
     // 3. Lo inyectamos en el título
-    titleElem.innerText = `Minoe ${nombreFormateado}`;
+    titleElem.innerText = `${nombreFormateado}`;
   }
 
   if (!inventory[cat]) return;
@@ -324,9 +324,9 @@ function renderProducts(cat) {
           <p class="product-card__sku u-text-xs">SKU: ${p.id}</p>
           <h4 class="product-card__name u-text-sm">${p.name}</h4>
           <p class="product-card__price u-text-xs">$${p.price}</p>
-          <button class="product-card__btn-add u-text-sm" 
-             data-id="${p.id}" 
-             data-name="${p.name}" 
+          <button class="product-card__btn-add u-text-sm"
+             data-id="${p.id}"
+             data-name="${p.name}"
              data-price="${p.price}">Añadir al carrito</button>
         </div>
 
