@@ -30,8 +30,12 @@
 
   /* GENERACIÓN DE TEXTURA POR CÓDIGO USANDO VARIABLES */
   background-image:
-    linear-gradient(var(--textura-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--textura-color) 1px, transparent 1px);
+    linear-gradient(var(--textura-color) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(
+      90deg,
+      var(--textura-color) 0.0625rem,
+      transparent 0.0625rem
+    );
   background-size: var(--textura-tamaño);
 
   /* Animaciones originales */
