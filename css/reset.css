@@ -3,9 +3,9 @@
 /**
  * RESET MAESTRO UNIVERSAL v2.1 - "THE SHIELD"
  * -------------------------------------------------------------------
- * OBJETIVO: Crear un lienzo 100% neutro, eliminando inconsistencias 
+ * OBJETIVO: Crear un lienzo 100% neutro, eliminando inconsistencias
  * entre navegadores (Chrome, Safari, Firefox, Edge).
- * FILOSOFÍA: 
+ * FILOSOFÍA:
  * 1. Especificidad Cero (:where) para fácil sobrescritura.
  * 2. Herencia total de tipografía y color.
  * 3. Prevención de errores comunes de Layout (CLS y Desbordamiento).
@@ -238,6 +238,6 @@ textarea {
 
 /* 8. SELECCIÓN DE TEXTO Y DESTACADOS */
 ::selection {
-  background-color: #2d5a27; /* Tu verde de marca */
+  background-color: var(--color-verde); /* Tu verde de marca */
   color: #ffffff;
 }

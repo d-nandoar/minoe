@@ -105,15 +105,15 @@
 
 :root {
   /* ESCALA DE CAPAS (Z-INDEX) */
+
   --z-critical: 9999; /* Bloqueo de rotación */
-  --z-preloader: 2000; /* Muro de carga */
+  --z-preloader: 2000; /* preloader muro de carga */
   --z-sidebar: 1400; /* Carrito lateral */
   --z-overlay-sidebar: 1300; /* Fondo oscuro carrito */
   --z-nav-mobile: 1200; /* Menú móvil */
   --z-overlay: 1100; /* Fondo oscuro menú */
   --z-header: 1000; /* Header principal */
   --z-slider-thumb: 100; /* Miniaturas Hero */
-  --z-slider-arrows: 30; /* Flechas navegación */
   --z-hero-active: 20; /* Slide frontal */
   --z-hero-content: 15; /* Textos Hero */
   --z-preloader-curtain: 10; /* preloader__curtain */
@@ -123,12 +123,10 @@
   /* PALETAS DE COLORES */
   --color-dorado: #c5a059;
   --color-verde: #0e3b32;
-  --verde-minoe: #0e3b32;
   --color-crema: #f2f1e6;
-  --crema: #f2f1ed;
+  --color-crema-studio: #e9e8dc;
   --color-blanco: #ffffff;
   --color-bg-contacto: #fcfcfc;
-  --blanco: #ffffff;
   --color-gris-oscuro: #2d2d2d;
   --color-gris-claro: #f9f9f9;
   --color-gris-divider: rgba(255, 255, 255, 0.2);
@@ -143,55 +141,13 @@
   --color-error-field: #a13d3d;
   --color-bg-error-field: #fffafb;
   --color-wapp: #25d366;
-  --color-wapp-hover: #128c7e;
   --color-overlay: rgba(0, 0, 0, 0.4);
-  --bg-contacto: #043927;
-  --accent-gold: #d4af37;
-  --dorado: #d4af37;
-  --rgb-verde-minoe: 4, 57, 39;
   --textura-color: rgba(
     255,
     255,
     255,
     0.03
   ); /* Color de los puntitos (blanco muy tenue - preloader) */
-
-  /* ESCALA TIPOGRÁFICA UNIVERSAL (Estrictamente EM) */
-  --text-xs: 0.75em; /* 12px */
-  --text-sm: 0.875em; /* 14px */
-  --text-sm-g: 0.957em; /* 15.31px */
-  --text-base: 1em; /* 16px */
-  --text-md: 1.333em; /* 21.32px */
-  --text-lg: 1.777em; /* 28.43px */
-  --text-xl: 2.369em; /* 37.90px */
-  --text-xxl: 3.157em; /* 50.51px */
-  --text-xxxl: 4.125em; /* 66px */
-
-  /* Alturas de Línea */
-  --leading-none: 1;
-  --leading-tight: 1.25;
-  --leading-normal: 1.5;
-  --leading-loose: 1.8;
-
-  /* SOMBRAS DE CAJA (BOX SHADOWS) */
-  --sombra-logo: 0 0 5px var(--color-dorado);
-  --sombra-dorada: 0 4px 15px rgba(197, 160, 89, 0.2);
-  --sombra-verde-hover: 0 8px 25px rgba(14, 59, 50, 0.3);
-  --sombra-card: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --sombra-nav: 0 2px 10px rgba(0, 0, 0, 0.2);
-  --sombra-gold-glow: drop-shadow(0 0 3px rgba(212, 175, 55, 0.5));
-  --sombra-input: 0 0 0px 1000px #ffffff inset;
-  --shadow-dark-soft: rgba(0, 0, 0, 0.25);
-  --shadow-light-soft: rgba(255, 255, 255, 0.05);
-
-  /* TRANSICIONES Y BEZIERS */
-  --transition-main: 0.3s ease-out;
-  --transition-second: 0.5s ease-out;
-  --bezier-lujo: cubic-bezier(0.65, 0, 0.35, 1);
-  --bezier-lujo-main: 0.3s cubic-bezier(0.65, 0, 0.35, 1);
-  --bezier-lujo-second: 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-  --transition-open-curve: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-close-curve: 0.5s cubic-bezier(0.32, 0, 0.67, 0);
 
   /* DEGRADADOS (GRADIENTES) */
   --gradient-especial: linear-gradient(
@@ -219,32 +175,72 @@
     rgba(0, 0, 0, 0.3),
     rgba(0, 0, 0, 0)
   );
-  --gradiente-nos-a: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    transparent 100%
-  );
-  --gradiente-nos-b: linear-gradient(
-    to top left,
-    rgba(var(--rgb-verde-minoe), 0.4) 0%,
-    transparent 100%
-  );
+
+  /* ESCALA TIPOGRÁFICA UNIVERSAL (Estrictamente EM) */
+
+  --text-xs: 0.75em; /* 12px */
+  --text-sm: 0.875em; /* 14px */
+  --text-sm-g: 0.957em; /* 15.31px */
+  --text-base: 1em; /* 16px */
+  --text-md: 1.333em; /* 21.32px */
+  --text-lg: 1.777em; /* 28.43px */
+  --text-xl: 2.369em; /* 37.90px */
+  --text-xxl: 3.157em; /* 50.51px */
+  --text-xxxl: 4.125em; /* 66px */
+
+  /* Alturas de Línea */
+
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-loose: 1.8;
+
+  /* SOMBRAS DE CAJA (BOX SHADOWS) */
+
+  --sombra-dorada: 0 4px 15px rgba(197, 160, 89, 0.2);
+  --sombra-verde-hover: 0 8px 25px rgba(14, 59, 50, 0.3);
+  --sombra-card: 0 2px 10px rgba(0, 0, 0, 0.09);
+  --sombra-nav: 0 2px 10px rgba(0, 0, 0, 0.2);
+  --sombra-gold-glow: drop-shadow(0 0 3px rgba(212, 175, 55, 0.5));
+  --sombra-input: 0 0 0px 1000px #ffffff inset;
+  --sombra-input-autofill: 0 0 0 62.5rem var(--color-blanco) inset !important ;
+  --sombra-item-thumbnail: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.3);
+  --sombra-card-flip: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.3);
+
+  /* SOMBRA TEXTOS */
+
+  --sombra-texto-boton: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+  /* TRANSICIONES Y BEZIERS */
+
+  --transition-main: 0.3s ease-out;
+  --transition-second: 0.5s ease-out;
+  --bezier-lujo: cubic-bezier(0.65, 0, 0.35, 1);
+  --bezier-lujo-main: 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  --bezier-lujo-second: 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  --transition-open-curve: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-close-curve: 0.5s cubic-bezier(0.32, 0, 0.67, 0);
+  --transition-open-sidebar: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-close-sidebar: 0.4s cubic-bezier(0.33, 0, 0.67, 1);
 
   /* BORDES Y OTROS */
+
   --borde-dorado-tenue: rgba(197, 160, 89, 0.2);
   --borde-verde-tenue: rgba(14, 59, 50, 0.3);
   --borde-input: #e2e2e2;
   --borde-input-focus: #d4af37;
-  --shake-distance: 2px;
+  --shake-distance: 0.125rem;
   --shake-duration: 0.2s;
-  --textura-tamaño: 3px 3px; /* Qué tan fino es el grano (preloader) */
+  --textura-tamaño: 0.1875rem 0.1875rem; /* Qué tan fino es el grano (preloader) */
 
   /* FUENTES ASIGNADAS */
+
   --fuente-titulos: "Playfair Display", serif;
   --fuente-cuerpo: "Montserrat", sans-serif;
-  --fuente-arrow: monospace, sans-serif;
 
   /* ESPACIADO SISTEMÁTICO (Estrictamente REM para márgenes/paddings) */
+
+  --space-xxs: 0.0938rem; /* 1.5px */
   --space-xs: 0.25rem; /* 4px */
   --space-sm: 0.5rem; /* 8px */
   --space-md: 1rem; /* 16px */
@@ -253,22 +249,24 @@
   --space-xxl: 3rem; /* 48px */
   --space-section: 5rem; /* 80px */
 
-  /* ESTADOS DE INTERACCIÓN Y FEEDBACK */
-  --color-hover-dorado: #b38e4a;
-  --color-verde-profundo: #051a16;
-  --bg-overlay-dark: rgba(0, 0, 0, 0.7);
-  --sombra-texto-boton: 0 2px 4px rgba(0, 0, 0, 0.3);
-
   /* REFINAMIENTOS DE DISEÑO (Luxury Aesthetic) */
-  --borde-radio-lg: 1.5625rem; /* 25px */
+
+  --borde-radio-circle: 50%;
+  --borde-radio-xxl: 2.5rem; /* 40px */
+  --borde-radio-xl: 1.5625rem; /* 25px */
+  --borde-radio-lg: 1.25rem; /* 20px */
   --borde-radio-md: 0.9375rem; /* 15px */
-  --opacidad-tenue: 0.6;
-  --blur-fondo: 8px;
+  --borde-radio-xs: 0.3125rem; /* 5px */
+  --blur-fondo-xl: 1.25rem; /* 20px */
+  --blur-fondo-lg: 0.5rem; /* 8px */
+  --blur-fondo-md: 0.3125rem; /* 5px */
+  --blur-fondo-xs: 0.125rem; /* 2px */
 
   /* VARIABLES PARA COMPONENTES DINÁMICOS */
-  --header-height: 4.5rem; /* 72px */
-  --sidebar-width-desktop: 26.25rem; /* 420px */
-  --ancho-maximo-sitio: 1524px;
+
+  --header-height: 3.75rem; /* 60px */
+  --sidebar-width-desktop: 23.75rem; /* 380px */
+  --ancho-maximo-sitio: 107.5rem; /* 1720px */
 }
 
 /* =========================================
@@ -279,19 +277,19 @@ body {
   background-color: var(--color-blanco);
   color: var(--color-gris-oscuro);
   font-family: var(--fuente-cuerpo);
-  /* margin: 0; */
 }
 
 /* Control de Scroll para Modales/Sidebar */
+
 html.no-scroll,
 body.no-scroll {
   touch-action: none;
   overflow: hidden !important;
   scroll-behavior: auto !important;
-  /* position: relative; */
 }
 
 /* Encabezados */
+
 h1,
 h2,
 h3,
@@ -299,9 +297,6 @@ h4,
 h5,
 h6 {
   font-family: var(--fuente-titulos);
-  /* Prioridad identidad Minoe */
-  /* color: var(--color-verde);  */
-  /* margin: 0; */
 }
 
 h1 {
@@ -309,6 +304,7 @@ h1 {
   line-height: var(--leading-none);
   font-weight: 700;
 }
+
 h2 {
   font-size: var(--text-xxxl);
   line-height: var(--leading-none);
@@ -334,32 +330,19 @@ h6 {
 }
 
 /* Textos de Cuerpo */
-p,
-li,
-blockquote {
-  font-size: var(--text-base);
-  line-height: var(--leading-normal);
-  font-family: var(--fuente-cuerpo);
-}
 
-small,
-caption {
-  font-size: var(--text-sm);
+p {
+  font-size: var(--text-base);
 }
 
 /* Elementos de Acción */
 a,
 button {
   text-transform: uppercase;
-  text-decoration: none;
-  transition: var(--transition-main);
 }
 
 button {
   font-weight: 700;
-  cursor: pointer;
-  border: none;
-  background: none;
 }
 
 a,
@@ -368,27 +351,10 @@ a,
 }
 
 /* Clases Utilitarias (BEM Helper) */
-.u-text-xxl {
-  font-size: var(--text-xxl);
-}
-.u-text-xl {
-  font-size: var(--text-xl);
-}
-.u-text-lg {
-  font-size: var(--text-lg);
-}
-.u-text-md {
-  font-size: var(--text-md);
-}
+
 .u-text-sm {
   font-size: var(--text-sm);
 }
 .u-text-xs {
   font-size: var(--text-xs);
-}
-.u-font-playfair {
-  font-family: var(--fuente-titulos);
-}
-.u-font-italic {
-  font-style: italic;
 }
