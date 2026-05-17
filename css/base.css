@@ -126,6 +126,7 @@
   --color-crema: #f2f1e6;
   --color-crema-studio: #e9e8dc;
   --color-blanco: #ffffff;
+  --color-footer: #000000;
   --color-bg-contacto: #fcfcfc;
   --color-gris-oscuro: #2d2d2d;
   --color-gris-claro: #f9f9f9;
@@ -197,19 +198,19 @@
 
   /* SOMBRAS DE CAJA (BOX SHADOWS) */
 
-  --sombra-dorada: 0 4px 15px rgba(197, 160, 89, 0.2);
-  --sombra-verde-hover: 0 8px 25px rgba(14, 59, 50, 0.3);
-  --sombra-card: 0 2px 10px rgba(0, 0, 0, 0.09);
-  --sombra-nav: 0 2px 10px rgba(0, 0, 0, 0.2);
-  --sombra-gold-glow: drop-shadow(0 0 3px rgba(212, 175, 55, 0.5));
-  --sombra-input: 0 0 0px 1000px #ffffff inset;
+  --sombra-dorada: 0 0.25rem 0.9375rem rgba(197, 160, 89, 0.2);
+  --sombra-verde-hover: 0 0.5rem 1.5625rem rgba(14, 59, 50, 0.3);
+  --sombra-card: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.09);
+  --sombra-nav: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2);
+  --sombra-gold-glow: drop-shadow(0 0 0.1875rem rgba(212, 175, 55, 0.5));
+  --sombra-input: 0 0 0 62.5rem var(--color-blanco) inset;
   --sombra-input-autofill: 0 0 0 62.5rem var(--color-blanco) inset !important ;
   --sombra-item-thumbnail: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.3);
   --sombra-card-flip: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.3);
 
   /* SOMBRA TEXTOS */
 
-  --sombra-texto-boton: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --sombra-texto-boton: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
 
   /* TRANSICIONES Y BEZIERS */
 
@@ -243,10 +244,14 @@
   --space-xxs: 0.0938rem; /* 1.5px */
   --space-xs: 0.25rem; /* 4px */
   --space-sm: 0.5rem; /* 8px */
-  --space-md: 1rem; /* 16px */
-  --space-lg: 1.5rem; /* 24px */
+  --space-sml: 0.625rem; /* 10px */
+  --space-md: 0.75rem; /* 12px */
+  --space-ml: 1rem; /* 16px */
+  --space-lg: 1.25rem; /* 20px */
   --space-xl: 2rem; /* 32px */
+  --space-xlg: 2.5rem; /* 40px */
   --space-xxl: 3rem; /* 48px */
+  --space-xxxl: 3.75rem; /* 60px */
   --space-section: 5rem; /* 80px */
 
   /* REFINAMIENTOS DE DISEÑO (Luxury Aesthetic) */

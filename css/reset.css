@@ -239,5 +239,5 @@ textarea {
 /* 8. SELECCIÓN DE TEXTO Y DESTACADOS */
 ::selection {
   background-color: var(--color-verde); /* Tu verde de marca */
-  color: #ffffff;
+  color: var(--color-blanco);
 }

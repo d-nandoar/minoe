@@ -532,7 +532,7 @@
   width: 90%;
   max-width: var(--sidebar-width-desktop);
   height: 100dvh;
-  padding: 0 0.9375rem;
+  padding: var(--space-md);
   background-color: var(--color-crema);
   box-shadow: var(--sombra-nav);
   border-radius: var(--borde-radio-lg) 0 0 var(--borde-radio-lg);
@@ -566,7 +566,6 @@
   position: relative;
   width: 100%;
   padding: 0.625rem 0;
-  margin-top: 0.625rem;
   border-radius: var(--borde-radio-md);
   text-align: center;
   background-color: var(--color-verde);
@@ -612,7 +611,7 @@
   border-radius: var(--borde-radio-lg);
   box-shadow: var(--sombra-card);
   background-color: var(--color-gris-claro);
-  margin: 0.625rem 0;
+  margin: var(--space-ml) 0;
 }
 
 /* main cart - descripción de producto */
@@ -1030,7 +1029,7 @@
 /* párrafo (p) */
 
 .hero__p-list {
-  margin: 2.5rem 0 1.25rem 0;
+  margin: var(--space-xlg) 0 var(--space-lg) 0;
   text-align: justify;
 }
 
@@ -1166,7 +1165,7 @@
 
 .nosotros {
   background-color: var(--color-crema);
-  padding: 5rem 0;
+  padding: var(--space-section) 0;
   letter-spacing: 0.0625rem;
   scroll-margin-top: 3.75rem;
 }
@@ -1267,7 +1266,7 @@
 
 .nosotros-cards__grid {
   width: 100%;
-  margin-top: 3.75rem;
+  margin-top: var(--space-xxxl);
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); */
   grid-template-columns: repeat(4, 1fr);
@@ -1423,7 +1422,7 @@
 
 .catalog__container {
   scroll-margin-top: 3.75rem;
-  padding: 5rem 0;
+  padding: var(--space-section) 0;
   letter-spacing: 0.0625rem;
 }
 
@@ -1442,8 +1441,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(12.5rem, 100%), 1fr));
   gap: 1.25rem;
-  margin-top: 2.5rem;
-  padding: 2rem;
+  margin-top: var(--space-xxxl);
+  padding: var(--space-xl);
   border: 1px solid var(--borde-dorado-tenue);
   box-shadow: var(--sombra-card-flip);
   border-radius: var(--borde-radio-xl);
@@ -1539,7 +1538,7 @@
 
 .contact {
   scroll-margin-top: 3.75rem;
-  padding: 5rem 0;
+  padding: var(--space-section) 0;
   /* Fondo con el degradado ultra-suave original */
   background: linear-gradient(
     to bottom,
@@ -1603,7 +1602,7 @@
 }
 
 .contact__details {
-  padding: 3rem;
+  padding: var(--space-xxl);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -1650,7 +1649,7 @@
 /* --- LADO DERECHO: FORMULARIO ORIGINAL --- */
 
 .contact__form-side {
-  padding: 3rem 0;
+  padding: var(--space-xxl) 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1792,8 +1791,8 @@
 
 .footer {
   color: var(--color-blanco);
-  background-color: #000;
-  padding: 1.25rem 0;
+  background-color: var(--color-footer);
+  padding: var(--space-lg) 0;
   width: 100%;
   height: auto;
 }
@@ -2112,7 +2111,7 @@
   .header__submenu {
     position: static;
     display: none;
-    margin-top: 0.75rem;
+    margin-top: var(--space-md);
     width: 110%;
   }
 
@@ -2137,7 +2136,7 @@
   /* p */
 
   .hero__p-list {
-    margin: 2rem 0 1.25rem 0;
+    margin: var(--space-xl) 0 var(--space-lg) 0;
   }
 
   .hero__thumbnail {
@@ -2174,6 +2173,12 @@
 
   .card-flip__text {
     font-size: 0.8em;
+  }
+
+  /* catálogo */
+
+  .catalog__grid {
+    padding: var(--space-lg);
   }
 
   /* contacto */
@@ -2237,7 +2242,7 @@
   /* p */
 
   .hero__p-list {
-    margin: 1rem 0 1.25rem 0;
+    margin: var(--space-lg) 0 var(--space-ml) 0;
     line-height: var(--leading-tight);
   }
 
@@ -2322,10 +2327,6 @@
 
   .cart-item__controls {
     width: 40%;
-  }
-
-  .catalog__grid {
-    padding: 1.2rem;
   }
 }
 /* #endregion */
