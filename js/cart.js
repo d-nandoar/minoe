@@ -437,12 +437,32 @@ cartList.addEventListener("click", (e) => {
   }
 });
 
-// Escuchamos clicks en el contenedor de productos (técnica de delegación de eventos)
+// Escuchamos clicks en el contenedor de productos adaptado al botón circular flotante
 productContainer.addEventListener("click", (e) => {
-  // Solo si el click fue en un botón de añadir
-  if (e.target.classList.contains("product-card__btn-add")) {
-    const d = e.target.dataset; // Leemos los atributos 'data-' que pusimos en el HTML
+  const btnAdd = e.target.closest(".catalog__btn-add");
+
+  if (btnAdd) {
+    e.preventDefault();
+    const d = btnAdd.dataset;
     addToCart(d.id, d.name, parseFloat(d.price));
+
+    if (!btnAdd.classList.contains("catalog__btn-add--success")) {
+      btnAdd.classList.add("catalog__btn-add--success");
+
+      // Buscamos el ícono interno de este botón específico
+      const icon = btnAdd.querySelector(".catalog__btn-icon");
+
+      // Esperamos 1.3 segundos (1300ms) y desvanecemos el visto
+      setTimeout(() => {
+        if (icon) icon.classList.add("u-fade-out");
+      }, 1200);
+
+      // A los 1.5 segundos (1500ms), cuando ya es invisible, hacemos el cambio de clase y lo revelamos
+      setTimeout(() => {
+        btnAdd.classList.remove("catalog__btn-add--success");
+        if (icon) icon.classList.remove("u-fade-out");
+      }, 1400);
+    }
   }
 });
 

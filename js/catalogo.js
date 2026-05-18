@@ -11,7 +11,7 @@ const inventory = {
   joyeria: [
     {
       id: "JW-01", // Un identificador único para que el código no se confunda de producto
-      name: "Anillo Diamante Real", // Nombre que verá el usuario
+      name: "Anillo Diamante Real Anillo Diamante Real Anillo Diamante Real Anillo Diamante Real", // Nombre que verá el usuario
       price: 1250, // Precio numérico para poder hacer cálculos matemáticos
       img: "assets/img/joy.png", // La ruta de la imagen para mostrarla en el HTML
     },
@@ -319,15 +319,20 @@ function renderProducts(cat) {
       <article class="product-card">
         <div class="product-card__img-container">
           <img src="${p.img}" class="product-card__img" alt="${p.name}">
+
+          <button class="catalog__btn-add"
+              data-id="${p.id}"
+              data-name="${p.name}"
+              data-price="${p.price}"
+              aria-label="Añadir al carrito">
+        <span class="catalog__btn-icon"></span>
+      </button>
         </div>
         <div class="product-card__content">
           <p class="product-card__sku u-text-xs">SKU: ${p.id}</p>
           <h4 class="product-card__name u-text-sm">${p.name}</h4>
           <p class="product-card__price u-text-xs">$${p.price}</p>
-          <button class="product-card__btn-add u-text-sm"
-             data-id="${p.id}"
-             data-name="${p.name}"
-             data-price="${p.price}">Añadir al carrito</button>
+
         </div>
 
 
