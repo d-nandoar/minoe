@@ -11,7 +11,7 @@ const inventory = {
   joyeria: [
     {
       id: "JW-01", // Un identificador único para que el código no se confunda de producto
-      name: "Anillo Diamante Real Anillo Diamante Real Anillo Diamante Real Anillo Diamante Real", // Nombre que verá el usuario
+      name: "Anillo Diamante Real", // Nombre que verá el usuario
       price: 1250, // Precio numérico para poder hacer cálculos matemáticos
       img: "assets/img/joy.png", // La ruta de la imagen para mostrarla en el HTML
     },
