@@ -2198,9 +2198,6 @@
   } */
 
   /* ---------------- */
-  /* ==========================================================\
-     SUBMENÚ MÓVIL: COLAPSO DE ALTURA ABSOLUTO (ACTIVO)
-     ========================================================== */
 
   .header__submenu {
     position: static;
@@ -2221,10 +2218,10 @@
 
     /* 3. Animación de transición fluida */
     transition:
-      max-height var(--transition-close-sidebar),
-      opacity var(--transition-close-sidebar),
-      visibility var(--transition-close-sidebar),
-      margin-top var(--transition-close-sidebar);
+      max-height var(--transition-second),
+      opacity var(--transition-second),
+      visibility var(--transition-second),
+      margin-top var(--transition-second);
   }
 
   /* ESTADO ABIERTO EN MÓVIL: Se activa con tu JS */
@@ -2239,10 +2236,10 @@
     max-height: 12.5rem;
 
     transition:
-      max-height var(--transition-open-sidebar),
-      opacity var(--transition-open-sidebar),
-      visibility var(--transition-open-sidebar),
-      margin-top var(--transition-open-sidebar);
+      max-height var(--transition-second),
+      opacity var(--transition-second),
+      visibility var(--transition-second),
+      margin-top var(--transition-second);
   }
 
   /* Ajuste de espacio de los items en el flujo móvil */
