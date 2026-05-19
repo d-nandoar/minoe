@@ -308,10 +308,11 @@
   /* NUEVO: Inicializamos la altura máxima para escritorio */
   max-height: max-content;
   transition:
-    background-color var(--transition-main),
-    box-shadow var(--transition-main),
+    background-color var(--transition-second),
+    box-shadow var(--transition-second),
     opacity var(--transition-second),
     visibility var(--transition-second);
+  animation: fadeOutDown var(--transition-second) forwards;
 }
 
 .arrow-rotate {
@@ -356,6 +357,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.625rem);
   }
 }
 
