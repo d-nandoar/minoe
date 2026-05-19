@@ -84,7 +84,7 @@ contactForm.addEventListener("submit", function (e) {
 
   // Paso 3: Validar Email (Formato)
   if (!validateEmail(inEmail.value)) {
-    showError(inEmail, "Correo inválido (ej. nombre@correo.com)");
+    showError(inEmail, "Correo electrónico no válido");
     inEmail.focus();
     return; // Detiene la ejecución aquí
   }
@@ -131,7 +131,7 @@ contactForm.addEventListener("submit", function (e) {
   contactForm.reset();
 
   // Reiniciamos el contador visual de caracteres
-  charCount.innerText = "0 / 1000";
+  charCount.innerText = "0/1000";
 });
 
 // Inicialización de restricciones y escuchadores

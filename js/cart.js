@@ -7,6 +7,7 @@ const cartList = document.getElementById("cart-list"); // Lista de ítems dentro
 const cartTotal = document.getElementById("cart-total"); // El precio total acumulado
 const cartCount = document.getElementById("cart-count"); // El circulito rojo con el número de productos
 const sidebar = document.getElementById("sidebar"); // El panel lateral del carrito
+const sidebarContent = document.getElementById("sidebarContent"); // El contenedor de los productos del carrito
 const cartOverlay = document.getElementById("overlay__cart"); // El fondo oscuro detrás del carrito
 // console.log(cartOverlay);
 
@@ -226,6 +227,7 @@ function updateUI() {
   // 1. LÓGICA DE CARRITO VACÍO
   if (cart.length === 0) {
     clearFormValues();
+    sidebarContent.classList.add("cart-empty--margin");
     if (typeof resetFormErrors === "function") resetFormErrors();
 
     cartList.innerHTML = `
@@ -246,6 +248,8 @@ function updateUI() {
 
   // 2. LÓGICA CUANDO HAY PRODUCTOS
   if (cartFooter) cartFooter.style.display = "block";
+
+  sidebarContent.classList.remove("cart-empty--margin");
 
   // Dentro de la función updateUI()
   cart.forEach((i) => {

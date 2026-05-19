@@ -290,6 +290,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.1875rem;
+  letter-spacing: 0.0625rem;
 }
 
 .header__submenu {
@@ -304,9 +305,13 @@
   padding: 1.25rem 0;
   opacity: 0;
   visibility: hidden;
+  /* NUEVO: Inicializamos la altura máxima para escritorio */
+  max-height: max-content;
   transition:
     background-color var(--transition-main),
-    box-shadow var(--transition-main);
+    box-shadow var(--transition-main),
+    opacity var(--transition-second),
+    visibility var(--transition-second);
 }
 
 .arrow-rotate {
@@ -581,7 +586,7 @@
 
 .sidebar__close {
   position: absolute;
-  top: -0.25rem;
+  top: -0.3125rem;
   right: 1.0625rem;
   padding: 0.625rem;
   transition: transform var(--bezier-lujo-main);
@@ -897,6 +902,10 @@
   color: var(--color-gris-oscuro);
   margin-bottom: 1.5rem;
   font-style: italic;
+}
+
+.cart-empty--margin {
+  margin-bottom: 0;
 }
 
 .cart-empty__link {
@@ -2085,7 +2094,7 @@
     display: block;
   }
 
-  .header__nav {
+  /* .header__nav {
     position: fixed;
     left: -14.6875rem;
     top: 0;
@@ -2102,13 +2111,45 @@
   .nav-visible {
     left: 0;
     transition: left var(--transition-open-curve);
+  } */
+
+  .header__nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: var(--z-nav-mobile);
+    min-width: 14.375rem;
+    min-height: 30%;
+    padding: 3.75rem 2.5rem 2.5rem 2.5rem;
+    background-color: var(--color-crema);
+    box-shadow: var(--sombra-nav);
+    border-radius: 0 var(--borde-radio-lg) var(--borde-radio-lg) 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(0.625rem);
+    transition:
+      opacity var(--transition-close-sidebar),
+      visibility var(--transition-close-sidebar),
+      transform var(--transition-close-sidebar); /*close*/
+  }
+
+  .nav-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateX(0);
+    transition:
+      opacity var(--transition-open-sidebar),
+      visibility var(--transition-open-sidebar),
+      transform var(--transition-open-sidebar); /*open*/
   }
 
   .header__ul {
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    gap: 2.5rem;
+    gap: 1.875rem;
   }
 
   /* Animación Fade-In para los links */
@@ -2145,7 +2186,7 @@
     position: relative;
   }
 
-  .header__submenu {
+  /* .header__submenu {
     position: static;
     display: none;
     margin-top: var(--space-md);
@@ -2154,7 +2195,62 @@
 
   .submenu-open {
     display: block;
+  } */
+
+  /* ---------------- */
+  /* ==========================================================\
+     SUBMENÚ MÓVIL: COLAPSO DE ALTURA ABSOLUTO (ACTIVO)
+     ========================================================== */
+
+  .header__submenu {
+    position: static;
+    width: 110%;
+    margin-top: 0;
+    background-color: var(--color-blanco);
+    box-shadow: var(--sombra-card);
+    border-radius: var(--borde-radio-lg);
+    /* 1. Forzamos el colapso físico total a 0 píxeles */
+    display: block !important; /* Desactiva cualquier comportamiento flotante */
+    max-height: 0; /* Aplasta la altura estructural */
+    padding: 0 !important;
+    overflow: hidden; /* Corta el texto que intente sobresalir */
+
+    /* 2. Control visual */
+    opacity: 0;
+    visibility: hidden;
+
+    /* 3. Animación de transición fluida */
+    transition:
+      max-height var(--transition-close-sidebar),
+      opacity var(--transition-close-sidebar),
+      visibility var(--transition-close-sidebar),
+      margin-top var(--transition-close-sidebar);
   }
+
+  /* ESTADO ABIERTO EN MÓVIL: Se activa con tu JS */
+  .header__submenu.submenu-open {
+    animation: none !important; /* Apagamos la animación de escritorio */
+    opacity: 1;
+    visibility: visible;
+    margin-top: var(--space-md);
+    padding: 0.5rem 0 !important;
+
+    /* Le damos una altura máxima segura suficiente para albergar los 4 links */
+    max-height: 12.5rem;
+
+    transition:
+      max-height var(--transition-open-sidebar),
+      opacity var(--transition-open-sidebar),
+      visibility var(--transition-open-sidebar),
+      margin-top var(--transition-open-sidebar);
+  }
+
+  /* Ajuste de espacio de los items en el flujo móvil */
+  .header__li-submenu {
+    padding: 0.5rem 1rem;
+  }
+
+  /* ---------------- */
 
   /* hero */
 
