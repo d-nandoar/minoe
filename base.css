@@ -131,6 +131,7 @@
   --color-bg-contacto: #fcfcfc;
   --color-gris-oscuro: #2d2d2d;
   --color-gris-claro: #f9f9f9;
+  --color-gris-medio: #999999;
   --color-gris-divider: rgba(255, 255, 255, 0.2);
   --color-gris-copy: rgba(
     255,
@@ -279,6 +280,88 @@
    3. ESTILOS BASE Y JERARQUÍA
    ========================================= */
 
+/* ==========================================================\
+   1. BARRA DE SCROLL GLOBAL DE LA WEB (html)
+   ========================================================== */
+
+/* Contenedor principal de la barra de la página */
+html::-webkit-scrollbar {
+  width: 0.5rem; /* Delgada y sutil */
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* El botón de la página va completo sin márgenes verticales */
+html::-webkit-scrollbar-thumb {
+  background-color: var(--color-gris-medio, #c1c1c1);
+  border-radius: 6.25rem;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0 0.125rem; /* Solo aire a los lados */
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-verde, #1b3d35);
+}
+
+/* ==========================================================\
+   2. BARRA DE SCROLL INTERNA DEL CARRITO (.sidebar__content)
+   ========================================================== */
+
+/* Forzamos al navegador a aplicar esto ÚNICAMENTE a los productos */
+.sidebar__content::-webkit-scrollbar {
+  width: 0.75rem !important; /* Sus 12px originales para el aire */
+}
+
+.sidebar__content::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.sidebar__content::-webkit-scrollbar-thumb {
+  background-color: var(--color-gris-medio, #c1c1c1) !important;
+  border-radius: var(--borde-radio-lg) !important;
+
+  /* REAVIVAMOS TU TRUCO MAESTRO:
+     1rem arriba y abajo para acortarla, 4px a los lados */
+  border-style: solid !important;
+  border-color: transparent !important;
+  border-width: 1rem 0.3125rem !important;
+
+  background-clip: padding-box !important;
+}
+
+/* 4. Suavizado de color al pasar el mouse por encima (Hover) en el carrito */
+.sidebar__content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-verde, #1b3d35) !important;
+
+  /* CRUCIAL: Mantenemos exactamente la misma estructura de bordes
+     para que la barra solo cambie de color y no salte o cambie de tamaño */
+  border-style: solid !important;
+  border-color: transparent !important;
+  border-width: 1rem 0.3125rem !important; /* Usa aquí 5px o 0.25rem según el que hayas elegido al final */
+  background-clip: padding-box !important;
+}
+
+/* -------------- */
+
+/* ==========================================================\
+   BLOQUEO ULTRA-HERMÉTICO DE SCROLLBAR GLOBAL (FIXED)
+   ========================================================== */
+
+/* Cuando el carrito esté activo, congelamos el contenedor raíz */
+html.cart-open-scroll {
+  overflow: hidden !important;
+}
+
+/* Evitamos que el header sticky o la estructura salten hacia la derecha
+   aplicando dinámicamente el mismo ancho exacto de la scrollbar eliminada */
+html.cart-open-scroll body {
+  padding-right: var(--scrollbar-width, 0px);
+}
+
 body {
   background-color: var(--color-blanco);
   color: var(--color-gris-oscuro);
@@ -287,12 +370,12 @@ body {
 
 /* Control de Scroll para Modales/Sidebar */
 
-html.no-scroll,
+/* html.no-scroll,
 body.no-scroll {
   touch-action: none;
   overflow: hidden !important;
   scroll-behavior: auto !important;
-}
+} */
 
 /* Encabezados */
 

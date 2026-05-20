@@ -19,30 +19,69 @@ const inNm = document.getElementById("cust-name");
 const inLn = document.getElementById("cust-lastname");
 const errorMsg = document.getElementById("form-error-msg"); // El texto de error que aparece si falta algo
 
-// --- GESTIÓN DE SCROLL LOCAL PARA CARRITO (OPTIMIZADA) ---
-let scrollPosCart = 0;
+// --- FUNCIONES INTERCEPTORAS DE EVENTOS (PREVENCIÓN DE SCROLL) ---
+function prevenirScrollCart(e) {
+  e.preventDefault();
+}
+// --- FUNCIONES INTERCEPTORAS INTELIGENTES DE EVENTOS ---
+function prevenirScrollCart(e) {
+  // Buscamos si el evento se originó dentro de la caja de productos (tu zona amarilla)
+  const zonaProductos = e.target.closest(".sidebar__content");
 
-// --- GESTIÓN DE SCROLL LOCAL PARA CARRITO (MÉTODO MENU) ---
+  if (zonaProductos) {
+    // Si el usuario está scrolleando dentro de los productos, NO bloqueamos el evento.
+    // Tu CSS con 'overflow-y: auto' y 'overscroll-behavior: contain' se encargará del resto de forma nativa.
+    return;
+  }
+
+  // Si está scrolleando en cualquier otra parte (el overlay oscuro, el header, etc.), congelamos el scroll.
+  e.preventDefault();
+}
+
+function prevenirScrollTecladoCart(e) {
+  // Si el usuario tiene el foco puesto dentro del carrito, permitimos que use las flechas para navegar sus productos
+  if (document.activeElement.closest("#sidebar")) {
+    return;
+  }
+
+  // Bloqueamos las teclas de desplazamiento si está interactuando fuera del carrito
+  const teclasBloqueadas = [
+    "Space",
+    "ArrowUp",
+    "ArrowDown",
+    "PageUp",
+    "PageDown",
+    "End",
+    "Home",
+  ];
+  if (teclasBloqueadas.includes(e.code)) {
+    e.preventDefault();
+  }
+}
+
+// --- GESTIÓN DE SCROLL LOCAL PARA CARRITO (BLOQUEO POR EVENTOS) ---
 function gestionBloqueoScrollCart(bloquear) {
-  const html = document.documentElement;
-  const body = document.body;
-
   if (bloquear) {
-    // Calculamos el ancho del scroll antes de bloquear para evitar el salto lateral
-    const scrollBarWidth = window.innerWidth - html.clientWidth;
+    // 1. Interceptamos la rueda del mouse y el scroll táctil en móviles
+    window.addEventListener("wheel", prevenirScrollCart, { passive: false });
+    window.addEventListener("touchmove", prevenirScrollCart, {
+      passive: false,
+    });
 
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-    body.style.paddingRight = `${scrollBarWidth}px`;
+    // 2. Interceptamos el teclado para evitar desplazamientos por accesibilidad
+    window.addEventListener("keydown", prevenirScrollTecladoCart, {
+      passive: false,
+    });
 
-    // Añadimos tu clase de CSS por si acaso
-    body.classList.add("no-scroll");
+    // 3. Opcional: añadimos una clase al body por si necesitas cambiar estilos visuales
+    document.body.classList.add("cart-open");
   } else {
-    // Restauramos todo de forma limpia
-    html.style.overflow = "";
-    body.style.overflow = "";
-    body.style.paddingRight = "";
-    body.classList.remove("no-scroll");
+    // Restauramos todos los listeners al cerrar el carrito de compras
+    window.removeEventListener("wheel", prevenirScrollCart);
+    window.removeEventListener("touchmove", prevenirScrollCart);
+    window.removeEventListener("keydown", prevenirScrollTecladoCart);
+
+    document.body.classList.remove("cart-open");
   }
 }
 // --- UTILIDADES ---
@@ -135,6 +174,7 @@ function toggleCart() {
   }
 
   const isOpening = !sidebar.classList.contains("sidebar--active");
+  const html = document.documentElement; // Guardamos la referencia al contenedor raíz HTML
 
   sidebar.classList.toggle("sidebar--active");
   cartOverlay.classList.toggle("overlay--active");
@@ -143,9 +183,22 @@ function toggleCart() {
   gestionBloqueoScrollCart(isOpening);
 
   if (isOpening) {
+    // 1. Calculamos los píxeles exactos que ocupa el scrollbar del navegador antes de ocultarlo
+    const scrollBarWidth = window.innerWidth - html.clientWidth;
+
+    // 2. Le inyectamos ese valor numérico en px a nuestra variable CSS
+    html.style.setProperty("--scrollbar-width", `${scrollBarWidth}px`);
+
+    // 3. Agregamos la clase que ejecuta el 'overflow: hidden' en el HTML sin que salte la pantalla
+    html.classList.add("cart-open-scroll");
+
     window.addEventListener("touchmove", preventDefault, { passive: false });
     if (typeof updateUI === "function") updateUI();
   } else {
+    // 4. Al cerrar, removemos la clase de bloqueo y limpiamos la propiedad CSS limpiamente
+    html.classList.remove("cart-open-scroll");
+    html.style.removeProperty("--scrollbar-width");
+
     window.removeEventListener("touchmove", preventDefault);
   }
 }

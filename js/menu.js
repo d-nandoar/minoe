@@ -16,28 +16,52 @@ const inicioLink = document.getElementById("header__a"); //id inicio
 const sections = document.querySelectorAll("section"); //class sections
 let estaNavegandoPorClick = false;
 
-// guardar posición
+// --- FUNCIONES INTERCEPTORAS DE EVENTOS PARA EL MENÚ MÓVIL ---
+function prevenirScrollMenu(e) {
+  e.preventDefault();
+}
 
-// let scrollPos = 0;
-
-function gestionBloqueoScroll(bloquear) {
-  const html = document.documentElement;
-  const body = document.body;
-
-  if (bloquear) {
-    // Calculamos el ancho del scroll antes de bloquear para evitar el salto lateral
-    const scrollBarWidth = window.innerWidth - html.clientWidth;
-
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-    body.style.paddingRight = `${scrollBarWidth}px`;
-  } else {
-    // Restauramos todo de forma limpia
-    html.style.overflow = "";
-    body.style.overflow = "";
-    body.style.paddingRight = "";
+function prevenirScrollTecladoMenu(e) {
+  const teclasBloqueadas = [
+    "Space",
+    "ArrowUp",
+    "ArrowDown",
+    "PageUp",
+    "PageDown",
+    "End",
+    "Home",
+  ];
+  if (teclasBloqueadas.includes(e.code)) {
+    e.preventDefault();
   }
 }
+
+// --- GESTIÓN DE SCROLL GENERAL PARA MENÚ MÓVIL (BLOQUEO POR EVENTOS) ---
+function gestionBloqueoScroll(bloquear) {
+  if (bloquear) {
+    // Interceptamos los gestos táctiles y la rueda del mouse en toda la ventana
+    window.addEventListener("wheel", prevenirScrollMenu, { passive: false });
+    window.addEventListener("touchmove", prevenirScrollMenu, {
+      passive: false,
+    });
+
+    // Interceptamos la navegación por teclado
+    window.addEventListener("keydown", prevenirScrollTecladoMenu, {
+      passive: false,
+    });
+
+    // Añadimos tu clase de control visual al body por si acaso
+    document.body.classList.add("no-scroll");
+  } else {
+    // Removemos los escuchadores para devolver el scroll nativo al cerrar el menú
+    window.removeEventListener("wheel", prevenirScrollMenu);
+    window.removeEventListener("touchmove", prevenirScrollMenu);
+    window.removeEventListener("keydown", prevenirScrollTecladoMenu);
+
+    document.body.classList.remove("no-scroll");
+  }
+}
+
 // Al abrir el menú (click en hamb)
 // Modifica el evento del navToggle
 // Dentro de menu.js
