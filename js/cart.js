@@ -1,50 +1,112 @@
-// Constante con el número de teléfono para el mensaje de WhatsApp.
+/* ============================================================================
+   1. CONFIGURACIONES Y CONSTANTES GLOBALES
+   ============================================================================ */
+
+// Número de teléfono celular con su código de país (Ecuador) para enviar los mensajes de WhatsApp
 const WHATSAPP_NUM = "593994831087";
 
-// 3. REFERENCIAS AL DOM
-// Usamos 'document.getElementById' para "atrapar" los elementos del HTML y poder controlarlos con JS.
-const cartList = document.getElementById("cart-list"); // Lista de ítems dentro del carrito
-const cartTotal = document.getElementById("cart-total"); // El precio total acumulado
-const cartCount = document.getElementById("cart-count"); // El circulito rojo con el número de productos
-const sidebar = document.getElementById("sidebar"); // El panel lateral del carrito
-const sidebarContent = document.getElementById("sidebarContent"); // El contenedor de los productos del carrito
-const cartOverlay = document.getElementById("overlay__cart"); // El fondo oscuro detrás del carrito
-// console.log(cartOverlay);
+/* ============================================================================
+   2. REFERENCIAS A ELEMENTOS DEL DOM (CAPTURA DE ELEMENTOS HTML)
+   ============================================================================ */
 
-const toastContainer = document.getElementById("toast-container"); // Para mostrar notificaciones rápidas
+// Elementos de la interfaz gráfica del carrito de compras
+const cartList = document.getElementById("cart-list"); // El contenedor donde se enlistan los productos agregados
+const cartTotal = document.getElementById("cart-total"); // El texto que muestra el precio total acumulado en dólares
+const cartCount = document.getElementById("cart-count"); // El círculo indicador flotante con la cantidad de artículos
+const sidebar = document.getElementById("sidebar"); // El panel lateral deslizable del carrito
+const sidebarContent = document.getElementById("sidebarContent"); // La zona interna que envuelve el contenido del carrito
+const cartOverlay = document.getElementById("overlay__cart"); // El fondo oscuro semitransparente que se activa detrás del panel
+const btnCloseCart = document.getElementById("close-cart"); // El botón con forma de 'X' para cerrar el carrito lateral
 
-// Referencias a los inputs del formulario de facturación
-const inId = document.getElementById("cust-id");
-const inNm = document.getElementById("cust-name");
-const inLn = document.getElementById("cust-lastname");
-const errorMsg = document.getElementById("form-error-msg"); // El texto de error que aparece si falta algo
+// Elementos de notificaciones y alertas
+const toastContainer = document.getElementById("toast-container"); // Contenedor flotante para mostrar mensajes rápidos
 
-// --- FUNCIONES INTERCEPTORAS DE EVENTOS (PREVENCIÓN DE SCROLL) ---
-function prevenirScrollCart(e) {
-  e.preventDefault();
+// Elementos del formulario de facturación y datos del cliente
+const inId = document.getElementById("cust-id"); // Campo de texto para ingresar la Cédula o el RUC
+const inNm = document.getElementById("cust-name"); // Campo de texto para ingresar el Nombre
+const inLn = document.getElementById("cust-lastname"); // Campo de texto para ingresar el Apellido
+const errorMsg = document.getElementById("form-error-msg"); // Bloque de texto oculto para alertar si faltan datos obligatorios
+
+/* ============================================================================
+   3. FUNCIONES DE UTILIDAD Y FORMATO (HERRAMIENTAS AUXILIARES)
+   ============================================================================ */
+
+// Convierte cualquier número en un formato de moneda legible (Ejemplo: 1250 -> $1,250.00)
+function formatCurrency(num) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(num);
 }
-// --- FUNCIONES INTERCEPTORAS INTELIGENTES DE EVENTOS ---
-function prevenirScrollCart(e) {
-  // Buscamos si el evento se originó dentro de la caja de productos (tu zona amarilla)
-  const zonaProductos = e.target.closest(".sidebar__content");
 
-  if (zonaProductos) {
-    // Si el usuario está scrolleando dentro de los productos, NO bloqueamos el evento.
-    // Tu CSS con 'overflow-y: auto' y 'overscroll-behavior: contain' se encargará del resto de forma nativa.
+/* ============================================================================
+   4. FUNCIONES DE GESTIÓN DE ERRORES Y FORMULARIOS
+   ============================================================================ */
+
+// Restablece los textos por defecto y quita las alertas visuales rojas de los campos de texto
+function resetFormErrors() {
+  // Devolvemos las etiquetas guía originales a las cajas de texto
+  inId.placeholder = "*Cédula(10)/RUC(13)";
+  inNm.placeholder = "*Nombre";
+  inLn.placeholder = "*Apellido";
+
+  // Recorremos los tres campos para quitarles la clase CSS que los pinta de rojo
+  [inId, inNm, inLn].forEach((input) => {
+    input.classList.remove("error-field");
+  });
+
+  // Si el letrero de error general está visible, lo ocultamos por completo
+  if (errorMsg) errorMsg.style.display = "none";
+}
+
+// Vacía por completo la información escrita en el formulario y limpia las alertas
+function clearFormValues() {
+  // Asignamos un texto vacío a cada campo del formulario
+  [inId, inNm, inLn].forEach((input) => (input.value = ""));
+  // Ejecutamos la función anterior para limpiar los bordes rojos y placeholders
+  resetFormErrors();
+}
+
+/* ============================================================================
+   5. FUNCIONES DE CONTROL DE INTERFAZ Y RESTRICCIONES DE NAVEGACIÓN
+   ============================================================================ */
+
+// Controla el comportamiento inteligente del scroll táctil en dispositivos móviles
+const preventDefault = (e) => {
+  // Revisamos si el dedo del usuario está tocando la zona con scroll de los productos
+  const isInsideScrollable = e.target.closest(".sidebar__content");
+
+  if (isInsideScrollable) {
+    // Si es así, no hacemos nada y dejamos que la pantalla se desplace normalmente
     return;
   }
 
-  // Si está scrolleando en cualquier otra parte (el overlay oscuro, el header, etc.), congelamos el scroll.
+  // Si toca zonas fijas como el total, el botón de cierre o el fondo oscuro, bloqueamos el movimiento
+  e.preventDefault();
+};
+
+// Evita que la rueda del ratón o el deslizamiento táctil muevan la página web de fondo
+function prevenirScrollCart(e) {
+  // Detectamos si el usuario está interactuando sobre la lista amarilla de productos
+  const zonaProductos = e.target.closest(".sidebar__content");
+
+  if (zonaProductos) {
+    // Si está ahí dentro, detenemos esta función y permitimos el scroll local nativo
+    return;
+  }
+
+  // Si está scrolleando sobre el fondo negro o el encabezado, congelamos el movimiento de la web
   e.preventDefault();
 }
 
+// Bloquea las teclas de dirección del teclado para que la página de fondo no se mueva
 function prevenirScrollTecladoCart(e) {
-  // Si el usuario tiene el foco puesto dentro del carrito, permitimos que use las flechas para navegar sus productos
+  // Si el usuario tiene seleccionada o enfocada alguna opción dentro del carrito de compras, no bloqueamos nada
   if (document.activeElement.closest("#sidebar")) {
     return;
   }
 
-  // Bloqueamos las teclas de desplazamiento si está interactuando fuera del carrito
+  // Lista de teclas que se encargan de mover la página hacia arriba o hacia abajo
   const teclasBloqueadas = [
     "Space",
     "ArrowUp",
@@ -54,29 +116,31 @@ function prevenirScrollTecladoCart(e) {
     "End",
     "Home",
   ];
+
+  // Si presiona una de estas teclas mientras el carrito está activo, cancelamos su efecto por completo
   if (teclasBloqueadas.includes(e.code)) {
     e.preventDefault();
   }
 }
 
-// --- GESTIÓN DE SCROLL LOCAL PARA CARRITO (BLOQUEO POR EVENTOS) ---
+// Activa o desactiva las restricciones de movimiento de la pantalla según el estado del carrito
 function gestionBloqueoScrollCart(bloquear) {
   if (bloquear) {
-    // 1. Interceptamos la rueda del mouse y el scroll táctil en móviles
+    // Escuchamos el scroll de la rueda del ratón y el arrastre de los dedos en celulares bloqueando el scroll de fondo
     window.addEventListener("wheel", prevenirScrollCart, { passive: false });
     window.addEventListener("touchmove", prevenirScrollCart, {
       passive: false,
     });
 
-    // 2. Interceptamos el teclado para evitar desplazamientos por accesibilidad
+    // Escuchamos las pulsaciones del teclado para interceptar las flechas de navegación
     window.addEventListener("keydown", prevenirScrollTecladoCart, {
       passive: false,
     });
 
-    // 3. Opcional: añadimos una clase al body por si necesitas cambiar estilos visuales
+    // Añadimos una clase identificadora al cuerpo de la página
     document.body.classList.add("cart-open");
   } else {
-    // Restauramos todos los listeners al cerrar el carrito de compras
+    // Al cerrar el carrito, removemos todos los escuchadores para que la web vuelva a la normalidad
     window.removeEventListener("wheel", prevenirScrollCart);
     window.removeEventListener("touchmove", prevenirScrollCart);
     window.removeEventListener("keydown", prevenirScrollTecladoCart);
@@ -84,205 +148,140 @@ function gestionBloqueoScrollCart(bloquear) {
     document.body.classList.remove("cart-open");
   }
 }
-// --- UTILIDADES ---
-// Funciones pequeñas que realizan tareas repetitivas o específicas.
 
-// Esta función toma un número y lo convierte a formato de dinero (ej: 1250 -> $1,250.00)
-function formatCurrency(num) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(num);
-}
-
-// Quita las marcas rojas de error de los campos del formulario.
-
-function resetFormErrors() {
-  // Restaurar Placeholders originales
-  inId.placeholder = "*Cédula(10)/RUC(13)";
-  inNm.placeholder = "*Nombre";
-  inLn.placeholder = "*Apellido";
-
-  // Quitar clases de error
-  [inId, inNm, inLn].forEach((input) => {
-    input.classList.remove("error-field");
-  });
-
-  // Ocultar el div ruidoso (ya no lo necesitaremos)
-  if (errorMsg) errorMsg.style.display = "none";
-}
-
-// Limpia el texto escrito en los inputs del formulario.
-function clearFormValues() {
-  [inId, inNm, inLn].forEach((input) => (input.value = "")); // Vaciamos cada campo
-  resetFormErrors(); // También reseteamos los errores visuales
-}
-
-// --- RESTRICCIONES DE INPUT (TIEMPO REAL) ---
-// Estas funciones evitan que el usuario escriba cosas que no debe mientras teclea.
-
-function setupInputConstraints() {
-  // Para la Cédula/RUC:
-  inId.addEventListener("input", (e) => {
-    // Reemplaza cualquier cosa que NO sea número (0-9) por nada.
-    e.target.value = e.target.value.replace(/[^0-9]/g, "");
-    // Si escribe más de 13 caracteres, corta el texto para que solo queden los primeros 13.
-    if (e.target.value.length > 13)
-      e.target.value = e.target.value.slice(0, 13);
-  });
-
-  // Para Nombres y Apellidos:
-  const lettersOnly = (e) => {
-    // Solo permite letras (incluyendo tildes y ñ) y espacios. Borra lo demás (números, símbolos).
-    e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
-  };
-  inNm.addEventListener("input", lettersOnly);
-  inLn.addEventListener("input", lettersOnly);
-}
-
-// carrar carrito con la X
-
-// Referencia al nuevo botón
-const btnCloseCart = document.getElementById("close-cart");
-
-// Evento para cerrar el carrito
-if (btnCloseCart) {
-  btnCloseCart.addEventListener("click", () => {
-    toggleCart();
-  });
-}
-
-// Versión inteligente que permite el scroll interno
-const preventDefault = (e) => {
-  // Verificamos si el toque ocurre dentro de la zona de productos
-  const isInsideScrollable = e.target.closest(".sidebar__content");
-
-  if (isInsideScrollable) {
-    // Si es dentro del contenido, permitimos que el evento siga su curso (haga scroll)
-    return;
-  }
-
-  // Si toca el total, el header del cart o el overlay, bloqueamos el movimiento
-  e.preventDefault();
-};
-
-// Abre o cierra el carrito lateral.
-
+// Muestra u oculta el panel lateral del carrito de compras alternando sus clases CSS
 function toggleCart() {
+  // Limpiamos cualquier rastro de alertas rojas en el formulario antes de operar
   if (typeof resetFormErrors === "function") {
     resetFormErrors();
   }
 
+  // Evaluamos si el carrito se va a abrir (revisando si NO tiene la clase activa todavía)
   const isOpening = !sidebar.classList.contains("sidebar--active");
-  const html = document.documentElement; // Guardamos la referencia al contenedor raíz HTML
+  const html = document.documentElement; // Guardamos el acceso a la etiqueta raíz <html> de la página
 
+  // Ponemos o quitamos las clases que controlan la visibilidad del panel y del fondo oscuro
   sidebar.classList.toggle("sidebar--active");
   cartOverlay.classList.toggle("overlay--active");
 
-  // Esta función debe existir arriba en tu archivo
+  // Activamos o desactivamos el bloqueo del scroll general de la página web de fondo
   gestionBloqueoScrollCart(isOpening);
 
   if (isOpening) {
-    // 1. Calculamos los píxeles exactos que ocupa el scrollbar del navegador antes de ocultarlo
+    // Medimos cuántos píxeles mide la barra de scroll vertical del navegador para evitar saltos de pantalla
     const scrollBarWidth = window.innerWidth - html.clientWidth;
 
-    // 2. Le inyectamos ese valor numérico en px a nuestra variable CSS
+    // Guardamos ese tamaño en una variable de CSS para compensar el espacio dinámicamente
     html.style.setProperty("--scrollbar-width", `${scrollBarWidth}px`);
 
-    // 3. Agregamos la clase que ejecuta el 'overflow: hidden' en el HTML sin que salte la pantalla
+    // Añadimos la clase que oculta el scroll del navegador de forma controlada
     html.classList.add("cart-open-scroll");
 
+    // Conectamos el detector de dedos en móviles para controlar el scroll local inteligente
     window.addEventListener("touchmove", preventDefault, { passive: false });
+
+    // Si la función que dibuja la interfaz existe, la ejecutamos para actualizar los datos
     if (typeof updateUI === "function") updateUI();
   } else {
-    // 4. Al cerrar, removemos la clase de bloqueo y limpiamos la propiedad CSS limpiamente
+    // Si estamos cerrando el carrito, limpiamos las clases del HTML y borramos la propiedad CSS de compensación
     html.classList.remove("cart-open-scroll");
     html.style.removeProperty("--scrollbar-width");
 
+    // Desconectamos el detector de dedos móvil para liberar la pantalla
     window.removeEventListener("touchmove", preventDefault);
   }
 }
 
-// Cambia la cantidad de un producto (delta puede ser 1 o -1).
+/* ============================================================================
+   6. LÓGICA DE CONTROL DE DATOS Y OPERACIONES DEL CARRITO (CORE)
+   ============================================================================ */
 
+// Modifica la cantidad elegida de un artículo específico sumando o restando unidades
 function updateQty(id, delta) {
-  const item = cart.find((i) => i.id === id); // Busca el producto en el carrito
+  // Buscamos dentro de la lista del carrito si el producto ya se encuentra registrado
+  const item = cart.find((i) => i.id === id);
 
   if (item) {
+    // Calculamos el valor resultante de la operación matemática
     const nuevaCantidad = item.qty + delta;
 
-    // --- VALIDACIÓN DE LÍMITES ---
+    // Controlamos que el número resultante esté siempre dentro del límite comercial permitido (1 a 99)
     if (nuevaCantidad >= 1 && nuevaCantidad <= 99) {
-      // Si está en el rango permitido (1-99), actualizamos
       item.qty = nuevaCantidad;
     } else if (nuevaCantidad <= 0) {
-      // Si el usuario logra bajar de 1 (por ejemplo, con el tacho de basura o lógica extra),
-      // lo eliminamos directamente.
+      // Si la cantidad llega a cero, removemos el producto por completo de la lista
       cart = cart.filter((i) => i.id !== id);
     } else if (nuevaCantidad > 99) {
-      // Si intenta subir de 99, no hacemos nada (el botón ya debería estar disabled)
+      // Si el usuario intenta sobrepasar el límite de 99, cancelamos la operación
       return;
     }
   }
 
-  // --- LÓGICA DE CIERRE AUTOMÁTICO ---
+  // Si después de la modificación el carrito se quedó completamente vacío, cerramos la interfaz
   if (cart.length === 0) {
     clearFormValues();
-    // Si el carrito se vació y está abierto, lo cerramos
     if (sidebar.classList.contains("sidebar--active")) {
       toggleCart();
     }
   }
 
-  // Persistimos el cambio en el almacenamiento local para que no se pierda al dar F5
-  // localStorage.setItem("MINOE_CART", JSON.stringify(cart));
-
-  resetFormErrors();
-  updateUI(); // Refrescamos lo que ve el usuario (aquí se activará el "99+" y los disabled)
-}
-
-// Elimina un producto específico del carrito sin importar la cantidad.
-function removeFromCart(id) {
-  // 'filter' crea una nueva lista excluyendo al producto que tenga ese ID.
-  cart = cart.filter((i) => i.id !== id);
-
-  // --- NUEVA LÓGICA DE CIERRE AUTOMÁTICO ---
-  if (cart.length === 0) {
-    clearFormValues();
-    // Si el carrito se vació y está abierto, lo cerramos
-    if (sidebar.classList.contains("sidebar--active")) {
-      toggleCart();
-    }
-  }
-
+  // Limpiamos los errores del formulario y redibujamos la interfaz con los nuevos valores numéricos
   resetFormErrors();
   updateUI();
 }
 
-// Añade un producto a la lista del carrito.
+// Saca de la lista un producto determinado sin importar cuántas unidades tenga añadidas
+function removeFromCart(id) {
+  // Filtramos la lista del carrito guardando todos los elementos MENOS el que coincide con este ID
+  cart = cart.filter((i) => i.id !== id);
+
+  // Verificamos si al sacar este elemento la lista quedó vacía para limpiar datos y cerrar el panel
+  if (cart.length === 0) {
+    clearFormValues();
+    if (sidebar.classList.contains("sidebar--active")) {
+      toggleCart();
+    }
+  }
+
+  // Refrescamos los errores y actualizamos la interfaz gráfica
+  resetFormErrors();
+  updateUI();
+}
+
+// Introduce un nuevo artículo a la lista del carrito de compras o incrementa su cantidad
 function addToCart(id, name, price) {
-  const exist = cart.find((i) => i.id === id); // ¿Ya estaba en el carrito?
-  // Si existe, le sumamos 1 a la cantidad. Si no, lo agregamos como un objeto nuevo.
+  // Revisamos si el producto en cuestión ya existía previamente en la lista
+  const exist = cart.find((i) => i.id === id);
+
+  // Si ya existía, aumentamos su contador en 1. Si no, creamos e insertamos el nuevo objeto
   exist ? exist.qty++ : cart.push({ id, name, price, qty: 1 });
+
+  // Actualizamos visualmente el carrito y disparamos el efecto visual de destellos en el botón
   updateUI();
   triggerCartAnimation();
 }
 
-// Esta función es el corazón visual: actualiza los totales, el contador y la lista del carrito.
+/* ============================================================================
+   7. RENDERIZADO VISUAL Y DIBUJADO DE LA INTERFAZ DE USUARIO (UI)
+   ============================================================================ */
 
+// Se encarga de procesar la información del arreglo 'cart' y escribir el HTML dinámicamente en pantalla
 function updateUI() {
+  // Reseteamos el contenedor HTML de la lista para limpiarlo antes de reescribirlo
   cartList.innerHTML = "";
-  let total = 0;
-  let count = 0;
+  let total = 0; // Acumulador para la suma total de dinero
+  let count = 0; // Acumulador para el total de unidades de productos
 
+  // Capturamos el pie de página del carrito (donde están el total y el formulario de compra)
   const cartFooter = document.querySelector(".sidebar__footer");
 
-  // 1. LÓGICA DE CARRITO VACÍO
+  // CASO A: SI EL CARRITO NO TIENE NINGÚN PRODUCTO
   if (cart.length === 0) {
     clearFormValues();
     sidebarContent.classList.add("cart-empty--margin");
     if (typeof resetFormErrors === "function") resetFormErrors();
 
+    // Escribimos en pantalla un diseño elegante avisando que no hay productos
     cartList.innerHTML = `
   <div class="cart-empty">
     <p class="cart-empty__message">Tu carrito está vacío</p>
@@ -290,28 +289,30 @@ function updateUI() {
   </div>
 `;
 
-    // OCULTAMOS AQUÍ SI ESTÁ VACÍO
+    // Apagamos la visibilidad del contador de la bolsa y del bloque del formulario inferior
     cartCount.style.display = "none";
     if (cartFooter) cartFooter.style.display = "none";
 
-    // Guardamos el estado vacío en LocalStorage
+    // Guardamos la lista vacía actual en la memoria del navegador de forma segura
     localStorage.setItem("MINOE_CART", JSON.stringify(cart));
     return;
   }
 
-  // 2. LÓGICA CUANDO HAY PRODUCTOS
-  if (cartFooter) cartFooter.style.display = "block";
+  // CASO B: SI EL CARRITO TIENE ELEMENTOS REGISTRADOS
+  if (cartFooter) cartFooter.style.display = "block"; // Aseguramos que el formulario inferior se muestre
 
   sidebarContent.classList.remove("cart-empty--margin");
 
-  // Dentro de la función updateUI()
+  // Recorremos los productos guardados uno por uno para calcular las sumas y armar el diseño de cada fila
   cart.forEach((i) => {
-    total += i.price * i.qty;
-    count += i.qty;
+    total += i.price * i.qty; // Multiplicamos el costo del artículo por las piezas llevadas
+    count += i.qty; // Sumamos la cantidad al totalizador de artículos
 
+    // Deshabilitamos los botones si el usuario llega a los extremos permitidos de cantidad
     const btnMinusDisabled = i.qty <= 1 ? "disabled" : "";
     const btnPlusDisabled = i.qty >= 99 ? "disabled" : "";
 
+    // Agregamos el fragmento de código HTML correspondiente a este producto en la lista en pantalla
     cartList.innerHTML += `
       <div class="cart-item">
         <div class="cart-item__info">
@@ -320,12 +321,10 @@ function updateUI() {
         </div>
         <div class="cart-item__controls">
           <div class="qty-selector">
-            <!-- Eliminamos onclick y usamos clases/data-id -->
             <button class="qty-selector__btn js-minus" data-id="${i.id}" ${btnMinusDisabled}>−</button>
             <span class="qty-selector__value">${i.qty}</span>
             <button class="qty-selector__btn js-plus" data-id="${i.id}" ${btnPlusDisabled}>+</button>
           </div>
-          <!-- Eliminamos onclick y usamos clase para borrar -->
           <button class="cart-item__remove js-remove" data-id="${i.id}">
             <span class="cart__trash-item cart__trash-item--url"></span>
           </button>
@@ -333,103 +332,108 @@ function updateUI() {
       </div>`;
   });
 
-  // 3. ACTUALIZACIÓN FINAL DEL CONTADOR (Movélo aquí abajo)
+  // CONTROL VISUAL DEL CONTADOR FLOTANTE: Ubicado sobre el icono del bolso de compras en la cabecera
   if (count > 0) {
-    cartCount.style.display = "flex"; // Mostramos el círculo
+    cartCount.style.display = "flex"; // Forzamos a que aparezca en pantalla como una caja flexible
 
+    // Si las piezas totales superan las 99, aplicamos formato reducido de texto para que no se desborde
     if (count > 99) {
       cartCount.innerText = "99+";
       cartCount.style.fontSize = "0.75em";
       cartCount.style.top = "-0.6875rem";
       cartCount.style.right = "-0.4063rem";
     } else {
+      // Si está en el rango normal de unidades, inyectamos el número y centramos el círculo
       cartCount.innerText = count;
       cartCount.style.fontSize = "0.75em";
       cartCount.style.top = "-0.5625rem";
       cartCount.style.right = "-0.125rem";
     }
   } else {
-    cartCount.style.display = "none"; // Por si acaso llega a 0 aquí
+    cartCount.style.display = "none"; // Protección extra en caso de que la suma llegue a cero
   }
 
+  // Seteamos el costo total final calculado con el formato de dinero adecuado
   cartTotal.innerText = formatCurrency(total);
+  // Guardamos la lista actualizada de objetos en la memoria local (LocalStorage) bajo formato de texto JSON
   localStorage.setItem("MINOE_CART", JSON.stringify(cart));
 }
 
-// Añadir evento fuera del updateUI para ese ID específico
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.id === "js-close-empty") {
-    toggleCart();
-  }
-});
+/* ============================================================================
+   8. COMPORTAMIENTOS DINÁMICOS Y ANIMACIONES INTERACTIVAS
+   ============================================================================ */
 
-// animación del carrito (añadir)
+// Dispara un efecto de destellos y micro-vibración visual en el botón de la bolsa al agregar piezas
 function triggerCartAnimation() {
   const wrapper = document.getElementById("open-cart");
-  if (!wrapper) return; // Seguridad por si el elemento no existe
+  if (!wrapper) return; // Validación de seguridad para prevenir fallos catastróficos si no existe
 
+  // Removemos la clase de animación si es que ya existía previamente
   wrapper.classList.remove("animate-sparkles");
-  void wrapper.offsetWidth; // Truco técnico para reiniciar la animación
+  // Provocamos un redibujado forzado en el navegador (reflow) para reiniciar los hilos de la animación CSS
+  void wrapper.offsetWidth;
+  // Insertamos la clase CSS que activa los keyframes de la animación de destello
   wrapper.classList.add("animate-sparkles");
 
+  // Esperamos a que finalicen los 600ms de la animación para limpiar la clase limpiamente
   setTimeout(() => {
     wrapper.classList.remove("animate-sparkles");
   }, 600);
 }
 
-// --- VALIDACIÓN Y ENVÍO (CORREGIDO FOCUS) ---
+/* ============================================================================
+   9. INTERFAZ DE COMUNICACIÓN EXTERNA: VALIDACIÓN Y ENVÍO A WHATSAPP
+   ============================================================================ */
 
-// Esta función se activa al dar click en "FINALIZAR PEDIDO".
+// Valida secuencialmente los datos del cliente y arma el enlace con el formato estructurado para WhatsApp
 function sendWhatsApp() {
-  // 1. Evita que la página se recargue (vital al usar <form>)
-  // if (e) e.preventDefault();
-
+  // Limpiamos los rastros y estilos visuales de errores previos en el formulario
   resetFormErrors();
-  // 1. Limpiamos estados previos
   resetFormErrors();
 
+  // Obtenemos los valores de los textos escritos, removiendo espacios en blanco innecesarios a los lados
   const idVal = inId.value.trim();
   const nameVal = inNm.value.trim();
   const lastVal = inLn.value.trim();
 
-  // VALIDACIÓN SECUENCIAL (Uno por uno)
+  // VALIDACIÓN DE PASOS SECUENCIALES (BLOQUEANTES)
 
-  // 1. Identificación
+  // Paso 1: Validar que el documento de identidad de Ecuador tenga exactamente 10 dígitos (Cédula) o 13 (RUC)
   if (idVal.length !== 10 && idVal.length !== 13) {
     inId.value = "";
     inId.placeholder = "*Cédula(10)/RUC(13)";
-    inId.classList.add("error-field"); // Activa el luxury-shake
-    inId.focus();
-    return; // Sale de la función y no evalúa lo demás
+    inId.classList.add("error-field"); // Agrega el efecto visual de vibración física
+    inId.focus(); // Mueve el foco de escritura automáticamente aquí
+    return; // Corta el flujo de la función inmediatamente
   }
 
-  // 2. Nombre
+  // Paso 2: Validar que el nombre tenga una extensión real (mínimo 2 letras)
   if (nameVal.length < 2) {
     inNm.value = "";
     inNm.placeholder = "*Nombre";
     inNm.classList.add("error-field");
     inNm.focus();
-    return; // Detiene el proceso aquí
+    return;
   }
 
-  // 3. Apellido
+  // Paso 3: Validar que el apellido tenga una extensión real (mínimo 2 letras)
   if (lastVal.length < 2) {
     inLn.value = "";
     inLn.placeholder = "*Apellido";
     inLn.classList.add("error-field");
     inLn.focus();
-    return; // Detiene el proceso aquí
+    return;
   }
 
-  // Definición de Emojis para que el mensaje de WhatsApp se vea elegante.
-  const iconSpark = "\u2728"; // ✨
-  const iconUser = "\uD83D\uDC64"; // 👤
-  const iconId = "\u{1FAAA}"; // 🪪 (Icono de tarjeta de ID)
-  const iconBag = "\uD83D\uDECD"; // 🛍️
-  const iconMoney = "\uD83D\uDCB0"; // 💰
-  const iconPray = "\u{1F478}\u{1F3FB}"; // 👸🏻 (Representando la marca de lujo)
+  // Definición de variables con Emojis en código Unicode para asegurar alta compatibilidad telefónica
+  const iconSpark = "\u2728"; // ✨ (Efecto brillo luxury)
+  const iconUser = "\uD83D\uDC64"; // 👤 (Usuario cliente)
+  const iconId = "\u{1FAAA}"; // 🪪 (Tarjeta física)
+  const iconBag = "\uD83D\uDECD"; // 🛍️ (Bolsa de compra)
+  const iconMoney = "\uD83D\uDCB0"; // 💰 (Dinero/Total)
+  const iconPray = "\u{1F478}\u{1F3FB}"; // 👸🏻 (Representación de la marca de alta costura)
 
-  // Construcción del mensaje de texto que llegará al celular.
+  // Armado del cuerpo del mensaje de texto estructurado y espaciado
   let msg = "-------------------------------\n";
   msg += `${iconSpark} *NUEVO PEDIDO MINOE* ${iconSpark}\n`;
   msg += "-------------------------------\n\n";
@@ -439,7 +443,7 @@ function sendWhatsApp() {
   msg += `${iconBag} *DETALLE DEL PEDIDO:*\n`;
   msg += "-------------------------------\n\n";
 
-  // Agregamos cada producto del carrito al mensaje
+  // Iteramos sobre los artículos del carrito para listarlos uno por uno con sus SKUs y desgloses
   cart.forEach((i) => {
     msg += `• *${i.name}*\n`;
     msg += `  ${i.id} | x${i.qty} | ${formatCurrency(i.price)} | ${formatCurrency(i.price * i.qty)}\n\n`;
@@ -450,72 +454,100 @@ function sendWhatsApp() {
   msg += "-------------------------------\n\n";
   msg += `*_Gracias por su preferencia._* ${iconPray}${iconSpark}`;
 
-  // 'encodeURIComponent' transforma el mensaje en un formato que el navegador entiende como dirección web.
+  // Codificamos el string del mensaje para transformarlo en una URL segura y válida para navegadores web
   const finalMsg = encodeURIComponent(msg);
-  // Abre una nueva pestaña con el chat de WhatsApp listo para enviar el mensaje.
+
+  // Abrimos una pestaña externa del navegador web apuntando a la API oficial de mensajes de WhatsApp
   window.open(
     `https://api.whatsapp.com/send?phone=${WHATSAPP_NUM}&text=${finalMsg}`,
     "_blank",
   );
 
-  // Una vez enviado, vaciamos el carrito y notificamos.
+  // Vaciamos el estado de memoria del carrito una vez que el pedido se ha enviado de forma exitosa
   cart = [];
-  clearFormValues(); // Limpia los inputs físicamente
-  updateUI();
-  toggleCart(); // Cerramos el carrito para una experiencia fluida
-  // showToast("¡Pedido Enviado!");
+  clearFormValues(); // Limpiamos las cajas del formulario de facturación
+  updateUI(); // Reconfiguramos la vista a su estado vacío
+  toggleCart(); // Ocultamos el panel deslizable lateral suavemente
 }
 
-// --- EVENTOS ---
+// Vincula los eventos de control y filtros en tiempo real sobre los inputs de texto del cliente
+function setupInputConstraints() {
+  // Configuración restrictiva para el campo de Cédula/RUC
+  inId.addEventListener("input", (e) => {
+    // Escaneamos el texto ingresado y reemplazamos de forma inmediata todo lo que NO sea un número por vacío
+    e.target.value = e.target.value.replace(/[^0-9]/g, "");
 
-// Aquí asignamos las funciones a los botones físicos de la página.
+    // Si la cadena escrita supera el límite de caracteres de un RUC (13), podamos el excedente
+    if (e.target.value.length > 13)
+      e.target.value = e.target.value.slice(0, 13);
+  });
 
-// Delegación de eventos para acciones dentro del carrito[cite: 3]
+  // Filtro restrictivo para admitir exclusivamente letras en Nombres y Apellidos
+  const lettersOnly = (e) => {
+    // Reemplazamos cualquier carácter extraño (números, símbolos, puntuaciones) dejando solo letras y espacios
+    e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
+  };
+
+  // Enganchamos el limitador a las cajas de Nombre y Apellido respectivamente
+  inNm.addEventListener("input", lettersOnly);
+  inLn.addEventListener("input", lettersOnly);
+}
+
+/* ============================================================================
+   10. ESCUCHADORES DE EVENTOS GLOBALES Y DELEGACIONES DE CLICS (LISTENERS)
+   ============================================================================ */
+
+// Delegación de eventos de clics sobre la lista interna del carrito para detectar sumas, restas o eliminaciones
 cartList.addEventListener("click", (e) => {
-  // 1. Identificar el botón (o el icono dentro del botón)
+  // Buscamos cuál fue el elemento más cercano que recibió el clic del usuario usando sus selectores de clase
   const btnMinus = e.target.closest(".js-minus");
   const btnPlus = e.target.closest(".js-plus");
   const btnRemove = e.target.closest(".js-remove");
 
-  // 2. Ejecutar acción según el botón presionado
+  // Si hizo clic en el botón de restar unidades, extraemos su ID único y actualizamos la cantidad en -1
   if (btnMinus) {
     const id = btnMinus.dataset.id;
     updateQty(id, -1);
   }
 
+  // Si hizo clic en el botón de sumar unidades, extraemos su ID único y actualizamos la cantidad en +1
   if (btnPlus) {
     const id = btnPlus.dataset.id;
     updateQty(id, 1);
   }
 
+  // Si presionó el icono del tacho de basura, extraemos su ID y removemos el producto por completo
   if (btnRemove) {
     const id = btnRemove.dataset.id;
     removeFromCart(id);
   }
 });
 
-// Escuchamos clicks en el contenedor de productos adaptado al botón circular flotante
-
+// Escuchador asignado al contenedor general de productos para interceptar las compras
 productContainer.addEventListener("click", (e) => {
+  // Validamos si el clic ocurrió sobre el botón circular flotante con el icono de añadir
   const btnAdd = e.target.closest(".catalog__btn-add");
 
   if (btnAdd) {
-    e.preventDefault();
-    const d = btnAdd.dataset;
+    e.preventDefault(); // Cancelamos comportamientos de salto o recarga por defecto
+    const d = btnAdd.dataset; // Extraemos el dataset con toda la metadata del producto
+
+    // Ejecutamos la inserción en el carrito convirtiendo el texto del costo a número flotante
     addToCart(d.id, d.name, parseFloat(d.price));
 
+    // Si el botón no se encuentra mostrando la animación de éxito, disparamos su ciclo visual
     if (!btnAdd.classList.contains("catalog__btn-add--success")) {
       btnAdd.classList.add("catalog__btn-add--success");
 
-      // Buscamos el ícono interno de este botón específico
+      // Capturamos la caja del icono interno de ese botón específico
       const icon = btnAdd.querySelector(".catalog__btn-icon");
 
-      // Esperamos 1.3 segundos (1300ms) y desvanecemos el visto
+      // Transcurridos 1.3 segundos (1300ms) aplicamos un desvanecimiento suave por CSS al visto de éxito
       setTimeout(() => {
         if (icon) icon.classList.add("u-fade-out");
       }, 1300);
 
-      // A los 1.5 segundos (1500ms), cuando ya es invisible, hacemos el cambio de clase y lo revelamos
+      // A los 1.5 segundos (1500ms) removemos los estados temporales devolviendo el icono original a su sitio
       setTimeout(() => {
         btnAdd.classList.remove("catalog__btn-add--success");
         if (icon) icon.classList.remove("u-fade-out");
@@ -524,70 +556,89 @@ productContainer.addEventListener("click", (e) => {
   }
 });
 
-// Botón para abrir el carrito
-// document.getElementById("open-cart").addEventListener("click", toggleCart);
-document.getElementById("open-cart").addEventListener("click", (e) => {
-  e.preventDefault();
-  toggleCart();
+// Escuchador global de clics para atrapar el enlace interactivo de "Explorar Catálogo" cuando la bolsa está vacía
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "js-close-empty") {
+    toggleCart(); // Cierra el panel lateral del carrito suavemente
+  }
 });
 
-// Click en el fondo oscuro para cerrar el carrito
-cartOverlay.addEventListener("click", toggleCart);
-
-// Botón de "Vaciar Bolsa" (el icono del tacho de basura grande)
-document.getElementById("clear-cart").addEventListener("click", () => {
-  cart = []; // Vaciamos la lista
-
-  // SOBREESCRIBIMOS EL GUARDADO CON UN ARREGLO VACÍO
-  // localStorage.setItem("MINOE_CART", JSON.stringify(cart));
-
-  updateUI(); // Refrescamos la pantalla
-  toggleCart();
-});
-
-// Botón de finalizar pedido
-document.getElementById("whatsapp-btn").addEventListener("click", sendWhatsApp);
-
-// Al terminar de cargar la página:
-window.onload = () => {
-  updateUI(); // Cargamos el carrito de la sesión anterior si existe
-  renderProducts("joyeria"); // Mostramos joyería al inicio por defecto
-  setupInputConstraints(); // Activamos las restricciones de escritura en los inputs
-};
-
+// Escuchador asignado para cerrar el panel si el cliente hace clic en un espacio libre de la web fuera del carrito
 document.addEventListener("click", (event) => {
+  // Revisamos si el panel del carrito se encuentra visible en pantalla
   const isCartActive = sidebar.classList.contains("sidebar--active");
-  if (!isCartActive) return;
+  if (!isCartActive) return; // Si está oculto, ignoramos el clic por completo
 
+  // Validación de seguridad para confirmar que el elemento clickeado sigue conectado al árbol del DOM
   if (!event.target.isConnected) return;
 
-  const clickInsideCart = sidebar.contains(event.target);
+  // Evaluamos las coordenadas lógicas del clic del usuario
+  const clickInsideCart = sidebar.contains(event.target); // ¿Fue adentro del panel del carrito?
   const clickOnCartBtn = document
     .getElementById("open-cart")
-    .contains(event.target);
+    .contains(event.target); // ¿Fue sobre el botón del header?
   const isActionButton =
     event.target.closest(".qty-selector__btn") ||
-    event.target.closest(".cart-item__remove");
+    event.target.closest(".cart-item__remove"); // ¿Fue sobre algún botón de control de cantidad?
 
-  // CORRECCIÓN: Un solo IF, un solo llamado
+  // Si el clic ocurrió afuera de todas estas zonas seguras, cerramos el panel de forma automatizada
   if (!clickInsideCart && !clickOnCartBtn && !isActionButton) {
     toggleCart();
   }
 });
 
-// Arreglo con tus inputs para automatizar la limpieza
+// Vincula los comportamientos dinámicos de limpieza sobre el formulario de facturación
 [inId, inNm, inLn].forEach((input) => {
   input.addEventListener("input", () => {
-    // Si el input tiene la clase de error, se la quitamos al escribir
+    // Si el usuario empieza a escribir sobre un campo con borde rojo, se lo quitamos inmediatamente
     if (input.classList.contains("error-field")) {
       input.classList.remove("error-field");
     }
 
-    // Si ya no hay campos con errores, ocultamos el mensaje general
+    // Comprobamos en tiempo real si todavía quedan otros campos con alertas rojas activas en la pantalla
     const hayErroresActivos =
       document.querySelectorAll(".error-field").length > 0;
+
+    // Si ya no queda ningún campo en estado de error, apagamos el banner ruidoso de error general
     if (!hayErroresActivos) {
       errorMsg.style.display = "none";
     }
   });
 });
+
+// Escuchador asignado al botón flotante de la cabecera para desplegar el carrito de compras
+document.getElementById("open-cart").addEventListener("click", (e) => {
+  e.preventDefault(); // Detiene cualquier comportamiento de enlace nativo
+  toggleCart(); // Llama a la función de apertura
+});
+
+// Escuchador asignado al botón con forma de 'X' dentro del carrito para ordenar su cierre
+if (btnCloseCart) {
+  btnCloseCart.addEventListener("click", () => {
+    toggleCart();
+  });
+}
+
+// Vincula el clic sobre el fondo oscuro semitransparente para cerrar el panel lateral deslizable
+cartOverlay.addEventListener("click", toggleCart);
+
+// Vincula el clic sobre el icono del tacho de basura grande para resetear y vaciar la bolsa por completo
+document.getElementById("clear-cart").addEventListener("click", () => {
+  cart = []; // Vaciamos el arreglo de memoria principal
+  updateUI(); // Redibujamos los componentes visuales a su estado original
+  toggleCart(); // Ocultamos el panel lateral suavemente
+});
+
+// Vincula el clic sobre el botón de confirmación final para procesar y despachar el pedido
+document.getElementById("whatsapp-btn").addEventListener("click", sendWhatsApp);
+
+/* ============================================================================
+   11. INICIALIZACIÓN GLOBAL DE CARGA DEL NAVEGADOR
+   ============================================================================ */
+
+// Evento maestro que se ejecuta de forma automática en el instante en que toda la página web termina de cargarse
+window.onload = () => {
+  updateUI(); // Recupera la sesión previa guardada en caché y dibuja los contadores correspondientes
+  renderProducts("joyeria"); // Ejecuta el renderizado de la categoría "joyería" por defecto al inicio
+  setupInputConstraints(); // Enciende los escuchadores de validación estricta y filtros sobre los campos de texto
+};

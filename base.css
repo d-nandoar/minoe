@@ -240,6 +240,7 @@
 
   --fuente-titulos: "Playfair Display", serif;
   --fuente-cuerpo: "Montserrat", sans-serif;
+  --fuente-arrow: monospace;
 
   /* ESPACIADO SISTEMÁTICO (Estrictamente REM para márgenes/paddings) */
 
@@ -285,6 +286,7 @@
    ========================================================== */
 
 /* Contenedor principal de la barra de la página */
+
 html::-webkit-scrollbar {
   width: 0.5rem; /* Delgada y sutil */
 }
@@ -367,15 +369,6 @@ body {
   color: var(--color-gris-oscuro);
   font-family: var(--fuente-cuerpo);
 }
-
-/* Control de Scroll para Modales/Sidebar */
-
-/* html.no-scroll,
-body.no-scroll {
-  touch-action: none;
-  overflow: hidden !important;
-  scroll-behavior: auto !important;
-} */
 
 /* Encabezados */
 

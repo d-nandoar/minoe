@@ -86,12 +86,6 @@
 
         <div class="header__logo">
           <a class="header__logo-a" id="header__logo-a" href="#hero">
-            <!-- <img
-              class="header__logo-img"
-              src="assets/img/milogo.png"
-              alt="logo minoe"
-              srcset=""
-          /> -->
             <h3 class="header__logo-h3">MINOE</h3>
           </a>
         </div>
@@ -828,6 +822,48 @@
         <p class="footer__p">© Minoe 2026. Todos los derechos reservados.</p>
       </div>
     </footer>
+
+    <!-- =====================
+         MODAL
+         ===================== -->
+
+    <div id="product-gallery-modal" class="gallery-modal" aria-hidden="true">
+      <div class="gallery-modal__backdrop" id="gallery-modal-backdrop"></div>
+
+      <div class="gallery-modal__container">
+        <button
+          class="gallery-modal__close"
+          id="gallery-modal-close"
+          aria-label="Cerrar galería"
+        >
+          &times;
+        </button>
+
+        <div class="gallery-slider">
+          <div class="gallery-slider__viewport">
+            <div class="gallery-slider__track" id="gallery-slider-track"></div>
+          </div>
+
+          <button
+            class="gallery-slider__arrow gallery-slider__arrow--prev"
+            id="gallery-slider-prev"
+            aria-label="Imagen anterior"
+          >
+            &#10094;
+          </button>
+
+          <button
+            class="gallery-slider__arrow gallery-slider__arrow--next"
+            id="gallery-slider-next"
+            aria-label="Imagen siguiente"
+          >
+            &#10095;
+          </button>
+        </div>
+
+        <div class="gallery-slider__dots" id="gallery-slider-dots"></div>
+      </div>
+    </div>
 
     <!-- =====================
          OVERLAY
