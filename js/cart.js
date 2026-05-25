@@ -609,7 +609,35 @@ document.addEventListener("click", (event) => {
 // Escuchador asignado al botón flotante de la cabecera para desplegar el carrito de compras
 document.getElementById("open-cart").addEventListener("click", (e) => {
   e.preventDefault(); // Detiene cualquier comportamiento de enlace nativo
-  toggleCart(); // Llama a la función de apertura
+
+  // CAPTURA DE SEGURIDAD: Obtenemos el estado de la barra de navegación móvil
+  const navMenu = document.querySelector(".header__nav");
+  const navOverlay = document.querySelector(".overlay__nav");
+  const subMenu = document.querySelector(".header__submenu");
+  const arrow = document.querySelector(".header__arrow-icon");
+
+  // Si el menú móvil está abierto, coordinamos un cierre coreografiado antes de abrir el cart
+  if (navMenu && navMenu.classList.contains("nav-visible")) {
+    // 1. Desvanecemos de inmediato las persianas de la navegación móvil
+    navMenu.classList.remove("nav-visible");
+    navOverlay?.classList.remove("overlay--active");
+    subMenu?.classList.remove("submenu-open");
+    arrow?.classList.remove("arrow-rotate");
+
+    // 2. Rompemos el bloqueo de scroll del menú para transferírselo limpiamente al carrito
+    if (typeof gestionBloqueoScroll === "function") {
+      gestionBloqueoScroll(false);
+    }
+
+    // 3. PAUSA DE ESTABILIZACIÓN: Esperamos 300ms a que la animación CSS del menú concluya
+    // y abrimos el carrito de compras de forma impecable y natural
+    setTimeout(() => {
+      toggleCart();
+    }, 300);
+  } else {
+    // Si el menú móvil ya estaba cerrado (Desktop o Home), operamos la apertura directa sin esperas
+    toggleCart();
+  }
 });
 
 // Escuchador asignado al botón con forma de 'X' dentro del carrito para ordenar su cierre

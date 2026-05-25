@@ -122,8 +122,12 @@ thumbnails.forEach((thumbnail, index) => {
   });
 });
 
-// Escuchador global conectado a la ventana de navegación en espera del evento personalizado enviado por el preloader.
-window.addEventListener("paginaRevelada", () => {
+/* ============================================================================
+   3.1 ARRANQUE BLINDADO DEL HERO (EVITA CONGELAMIENTO EN PRODUCCIÓN)
+   ============================================================================ */
+
+// Encapsulamos la lógica de inicialización en una función única
+function inicializarHeroSlider() {
   // 1. Seleccionamos el contenedor principal de la estructura del hero.
   const heroContainer = document.querySelector(".hero");
 
@@ -137,4 +141,14 @@ window.addEventListener("paginaRevelada", () => {
   setTimeout(() => {
     iniciarAutoRun();
   }, 2000);
-});
+}
+
+// CONTROL DE TIEMPO (RACE CONDITION)
+// Si el preloader terminó de cargar ANTES de que este script se interpretara:
+if (document.body.classList.contains("loaded-complete")) {
+  // Inicializamos el slider de inmediato porque la señal ya pasó
+  inicializarHeroSlider();
+} else {
+  // Si el preloader sigue activo en pantalla, nos quedamos esperando el "timbre" normalmente
+  window.addEventListener("paginaRevelada", inicializarHeroSlider);
+}

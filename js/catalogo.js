@@ -2,14 +2,33 @@
    1. VARIABLES DE ESTADO GLOBAL (MEMORIA TEMPORAL DEL NAVEGADOR)
    ============================================================================ */
 
-// Creamos o cargamos la lista de compras. Si el navegador ya tiene guardado el carrito "MINOE_CART",
-// lo convierte de texto a un arreglo de objetos de JavaScript. Si está vacío, inicia como una lista vacía [].
-let cart = JSON.parse(localStorage.getItem("MINOE_CART")) || [];
+// [NUEVO - BLINDADO] Intentamos leer el almacenamiento de manera segura
+let cart = [];
 
-// Lista interna que guardará las direcciones (URLs) de las imágenes del producto que el usuario está mirando en el modal.
+try {
+  const localData = localStorage.getItem("MINOE_CART");
+  // Si existe información, intentamos procesarla
+  if (localData) {
+    cart = JSON.parse(localData);
+
+    // Verificación de seguridad extra: Nos aseguramos de que realmente sea un Arreglo []
+    if (!Array.isArray(cart)) {
+      cart = [];
+    }
+  }
+} catch (error) {
+  // Si los datos estaban corruptos o alterados, evitamos el crash, limpiamos y reseteamos
+  console.warn(
+    "Minoe Cart: Se detectaron datos corruptos en el localStorage. Reseteando carrito por seguridad.",
+  );
+  localStorage.removeItem("MINOE_CART");
+  cart = [];
+}
+
+// [SE MANTIENEN] Lista interna que guardará las direcciones (URLs) de las imágenes del producto que el usuario está mirando en el modal.
 let activeImagesList = [];
 
-// Indicador numérico que guarda la posición de la imagen que se está mostrando actualmente en la galería (0 es la primera).
+// [SE MANTIENEN] Indicador numérico que guarda la posición de la imagen que se está mostrando actualmente en la galería (0 es la primera).
 let currentImageIndex = 0;
 
 /* ============================================================================

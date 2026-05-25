@@ -289,9 +289,35 @@ document.addEventListener("click", (event) => {
 });
 
 // Detector de clics conectado al logotipo de la marca para navegar fluidamente al tope del inicio (Hero)
+
 logo.addEventListener("click", (e) => {
   e.preventDefault();
-  navegarA("#hero", inicioLink);
+  estaNavegandoPorClick = true;
+
+  // 1. Si la navegación ocurre en pantallas móviles (con el menú desplegado)
+  if (navMenu.classList.contains("nav-visible")) {
+    // Colapsamos todos los estados de la interfaz móvil
+    navMenu.classList.remove("nav-visible");
+    overlay.classList.remove("overlay--active");
+    subMenu.classList.remove("submenu-open");
+    arrow.classList.remove("arrow-rotate");
+
+    // Desactivamos el bloqueo del scroll de fondo para preparar el viaje
+    gestionBloqueoScroll(false);
+
+    // PAUSA CRÍTICA DE ESTABILIZACIÓN: Aguardamos a que el navegador asimile el cambio de estado del body
+    setTimeout(() => {
+      navegarA("#hero", inicioLink);
+    }, 350);
+  } else {
+    // Si el menú móvil ya estaba cerrado (como en ordenadores), ejecutamos el viaje directo sin esperas
+    navegarA("#hero", inicioLink);
+  }
+
+  // Desactivamos el escudo protector de scroll pasados 2 segundos, cuando el viaje fluido ya concluyó
+  setTimeout(() => {
+    estaNavegandoPorClick = false;
+  }, 2000);
 });
 
 // Bucle inteligente que recorre cada enlace de navegación para interceptar los saltos e inyectar retardos de estabilización
@@ -336,51 +362,94 @@ navLinks.forEach((link) => {
   });
 });
 
-// Detector en tiempo real asignado al movimiento de la rueda o desplazamiento del usuario (Scroll)
+// ============================================================================
+// 5.1 RASTREADOR DE SCROLL OPTIMIZADO (BLINDAJE CONTRA TIRONES DE RENDIMIENTO)
+// ============================================================================
+
+let scrollTimeoutActivo = false;
+
 window.addEventListener("scroll", () => {
-  // Si nos estamos moviendo por culpa de un clic en el menú o si el menú móvil está abierto, bloqueamos este rastreo
-  if (estaNavegandoPorClick || navMenu.classList.contains("nav-visible")) {
-    return;
-  }
+  // Si ya hay un cálculo programado en este frame, ignoramos los eventos duplicados
+  if (scrollTimeoutActivo) return;
 
-  let seccionActual = "";
-  const pixelesDeMargen = 150; // Margen de tolerancia para activar el botón un poco antes de pisar la sección
-  const secciones = document.querySelectorAll("section[id]");
+  scrollTimeoutActivo = true;
 
-  // 1. Escaneo de las secciones físicas del documento para saber cuál está cruzando la pantalla en este momento
-  secciones.forEach((seccion) => {
-    const seccionTop = seccion.offsetTop;
-    if (window.pageYOffset >= seccionTop - pixelesDeMargen) {
-      seccionActual = seccion.getAttribute("id");
+  window.requestAnimationFrame(() => {
+    // Si nos estamos moviendo por culpa de un clic en el menú o si el menú móvil está abierto, liberamos y salimos
+    if (estaNavegandoPorClick || navMenu.classList.contains("nav-visible")) {
+      scrollTimeoutActivo = false;
+      return;
     }
+
+    let seccionActual = "";
+    const pixelesDeMargen = 150;
+    const secciones = document.querySelectorAll("section[id]");
+
+    // 1. Escaneo de las secciones físicas del documento
+    secciones.forEach((seccion) => {
+      const seccionTop = seccion.offsetTop;
+      if (window.pageYOffset >= seccionTop - pixelesDeMargen) {
+        seccionActual = seccion.getAttribute("id");
+      }
+    });
+
+    // 2. Rastreador avanzado para el Catálogo
+    if (seccionActual === "catalogo") {
+      const catalogContainer = document.getElementById("catalogo");
+      if (catalogContainer) {
+        const claseCategoria = Array.from(catalogContainer.classList).find(
+          (cls) => cls.includes("catalog__container--"),
+        );
+
+        if (claseCategoria) {
+          seccionActual = claseCategoria.split("--")[1];
+        }
+      }
+    }
+
+    // 3. Control de retorno al tope
+    if (window.pageYOffset < 100) {
+      activarLink(inicioLink);
+      scrollTimeoutActivo = false;
+      return;
+    }
+
+    // 4. Encendido del enlace correspondiente
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href");
+      if (href === `#${seccionActual}`) {
+        activarLink(link);
+      }
+    });
+
+    // Liberamos el candado para permitir el cálculo en el siguiente frame visual
+    scrollTimeoutActivo = false;
   });
+});
 
-  // 2. Rastreador avanzado para el Catálogo: Traduce la sección 'catalogo' a la categoría específica activa
-  if (seccionActual === "catalogo") {
-    const catalogContainer = document.getElementById("catalogo");
+// ============================================================================
+// 5.2 RESET RESPONSIVO INTELIGENTE (EVITA CONGELAMIENTO AL GIRAR LA PANTALLA)
+// ============================================================================
+let resizeTimeout;
 
-    // Inspeccionamos la lista de clases del contenedor buscando cuál de ellas incluye el prefijo identificador de categoría
-    const claseCategoria = Array.from(catalogContainer.classList).find((cls) =>
-      cls.includes("catalog__container--"),
-    );
+window.addEventListener("resize", () => {
+  // Limpiamos el temporizador en cada micro-movimiento del cambio de tamaño
+  clearTimeout(resizeTimeout);
 
-    if (claseCategoria) {
-      // Picamos la clase por su guion doble (split) para extraer limpiamente la palabra (ej: 'joyeria', 'studio', etc.)
-      seccionActual = claseCategoria.split("--")[1];
+  // Ejecutamos la validación solo cuando la pantalla se detenga por 100ms
+  resizeTimeout = setTimeout(() => {
+    // Si la pantalla pasa a tamaño Desktop (> 1024px) y el menú móvil quedó abierto
+    if (window.innerWidth > 1024 && navMenu.classList.contains("nav-visible")) {
+      // 1. Cerramos las persianas de navegación móvil
+      navMenu.classList.remove("nav-visible");
+      overlay.classList.remove("overlay--active");
+      subMenu.classList.remove("submenu-open");
+      arrow.classList.remove("arrow-rotate");
+
+      // 2. Liberamos quirúrgicamente el scroll de fondo
+      if (typeof gestionBloqueoScroll === "function") {
+        gestionBloqueoScroll(false);
+      }
     }
-  }
-
-  // 3. Control de retorno: si el usuario subió al tope de la página, encendemos el enlace de Inicio
-  if (window.pageYOffset < 100) {
-    activarLink(inicioLink);
-    return;
-  }
-
-  // 4. Recorremos los botones para encender el enlace cuyo atributo href coincida milimétricamente con el id de la sección actual
-  navLinks.forEach((link) => {
-    const href = link.getAttribute("href");
-    if (href === `#${seccionActual}`) {
-      activarLink(link);
-    }
-  });
+  }, 100);
 });
