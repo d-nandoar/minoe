@@ -58,14 +58,14 @@
 }
 
 /* --- LOGO Y CÍRCULO --- */
-.logo-wrapper {
+/* .logo-wrapper {
   position: relative;
-  width: 13.75rem; /* Tamaño ligeramente mayor */
+  width: 13.75rem;
   height: 13.75rem;
   margin: 0 auto;
 }
 
-.circle-svg {
+ .circle-svg {
   position: absolute;
   inset: 0;
   transform: rotate(-90deg);
@@ -86,6 +86,41 @@
   border-radius: 50%;
   overflow: hidden;
   clip-path: circle(50%);
+} */
+
+.line-svg {
+  /* 1. Positioning */
+  display: block; /* Eliminamos 'absolute' para que baje de forma natural */
+  /* 2. Box Model / Dimensions */
+  width: 100%; /* Se extiende a lo ancho de su contenedor */
+  height: 0.125rem; /* Grosor de la línea en rem */
+  margin-top: 0.5rem; /* Separación controlada respecto al texto de arriba */
+  /* 4. Visuals */
+  overflow: visible; /* Evita que el trazo se corte en los bordes */
+  /* 5. Interactions / Animations */
+  /* Eliminamos 'transform: rotate(-90deg)' porque la línea ya es horizontal */
+}
+
+.line-path {
+  /* 4. Visuals / Decoration */
+  fill: none;
+  stroke: var(--color-dorado);
+  stroke-width: 1.5;
+  stroke-linecap: round; /* Suaviza los extremos de la línea recta */
+  /* 5. Interactions / Animations */
+  /* Como el viewBox ahora mide 100 de ancho, el largo total del trazo es 100 */
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 2.5s var(--bezier-lujo) forwards;
+}
+
+.logo-img-container {
+  /* 1. Positioning */
+  /* Si la imagen va dentro del flujo de la página, eliminamos 'absolute' e 'inset' */
+  /* 2. Box Model / Dimensions */
+  /* 4. Visuals */
+  /* Eliminamos border-radius y clip-path circulares si ya no es un logo redondo */
+  overflow: hidden;
 }
 
 .logo-img {
@@ -111,8 +146,9 @@
 
 .brand-name {
   font-size: 3em; /* Aumentado de 2.2rem */
-  color: var(--color-verde);
-  letter-spacing: 0.625em; /* Más espaciado para lujo */
+  color: var(--color-gris-oscuro);
+  letter-spacing: 1.875rem; /* Más espaciado para lujo */
+  margin-right: -1.875rem;
   font-weight: 300;
   transform: translateY(100%);
   animation: slideUp 1.5s 0.5s var(--bezier-lujo) forwards;
@@ -123,6 +159,7 @@
   color: var(--color-verde);
   letter-spacing: 0.25rem;
   margin-top: 0.75rem;
+  margin-right: -0.25rem;
   opacity: 0;
   animation: fadeIn 1.5s 1.5s forwards;
 }
@@ -177,4 +214,16 @@
 
 .loaded .main-content {
   opacity: 1;
+}
+
+@media (max-width: 350px) {
+  .preloader__content {
+    width: 90%;
+  }
+  .brand-name {
+    font-size: 2.5em; /* Aumentado de 2.2rem */
+  }
+  .brand-tagline {
+    font-size: 0.8em; /* Aumentado ligeramente */
+  }
 }
